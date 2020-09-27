@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
+#import "FirstViewController.h"
+#import "SecondViewController.h"
 
 @interface AppDelegate ()
 
@@ -19,8 +20,17 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.viewControler = [[ViewController alloc] init];
-    self.window.rootViewController = self.viewControler;
+    UIViewController *viewController1 = [[FirstViewController alloc] init];
+    viewController1.view.backgroundColor = [UIColor redColor];
+    viewController1.tabBarItem.title = @"首页"
+    
+    
+    UIViewController *viewController2 = [[SecondViewController alloc] init];
+    
+    
+    self.tabBarController = [[UITabBarController alloc] init];
+    self.tabBarController.viewControllers = @[viewController1,viewController2];
+    self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;
 }
