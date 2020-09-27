@@ -20,16 +20,24 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    UIViewController *viewController1 = [[FirstViewController alloc] init];
-    viewController1.view.backgroundColor = [UIColor redColor];
-    viewController1.tabBarItem.title = @"首页"
-    
-    
-    UIViewController *viewController2 = [[SecondViewController alloc] init];
-    
+    self.window.backgroundColor = [UIColor whiteColor];
     
     self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = @[viewController1,viewController2];
+    self.tabBarController.view.backgroundColor = [UIColor blueColor];
+    
+    FirstViewController *viewController1 = [[FirstViewController alloc] init];
+    UINavigationController *nav1 = [[UINavigationController alloc]initWithRootViewController:viewController1];
+    nav1.view.backgroundColor = [UIColor redColor];
+    nav1.tabBarItem.title = @"首页";
+    
+    SecondViewController *viewController2 = [[SecondViewController alloc] init];
+    UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:viewController2];
+    nav2.view.backgroundColor = [UIColor blueColor];
+    nav2.tabBarItem.title = @"次页";
+    
+    self.tabBarController = [[UITabBarController alloc] init];
+    self.tabBarController.viewControllers = @[nav1,nav2];
+    self.tabBarController.tabBar.translucent = NO;
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;
