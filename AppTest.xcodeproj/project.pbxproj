@@ -66,22 +66,38 @@
 		9D95676225188EA70071A7B6 /* AppTest */ = {
 			isa = PBXGroup;
 			children = (
+				9D96C6182520356D00199391 /* View */,
+				9D96C6172520354800199391 /* Controller */,
 				9D95676325188EA70071A7B6 /* AppDelegate.h */,
 				9D95676425188EA70071A7B6 /* AppDelegate.m */,
 				9D95676625188EA70071A7B6 /* SceneDelegate.h */,
 				9D95676725188EA70071A7B6 /* SceneDelegate.m */,
-				9D95676925188EA70071A7B6 /* ViewController.h */,
-				9D95676A25188EA70071A7B6 /* ViewController.m */,
 				9D95676C25188EA70071A7B6 /* Main.storyboard */,
 				9D95677225188EAA0071A7B6 /* Assets.xcassets */,
 				9D95677425188EAA0071A7B6 /* LaunchScreen.storyboard */,
 				9D95677725188EAA0071A7B6 /* Info.plist */,
 				9D95677825188EAA0071A7B6 /* main.m */,
 				9D95676F25188EA70071A7B6 /* AppTest.xcdatamodeld */,
+			);
+			path = AppTest;
+			sourceTree = "<group>";
+		};
+		9D96C6172520354800199391 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9D95676925188EA70071A7B6 /* ViewController.h */,
+				9D95676A25188EA70071A7B6 /* ViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		9D96C6182520356D00199391 /* View */ = {
+			isa = PBXGroup;
+			children = (
 				9D9567812518A59B0071A7B6 /* DelegateView.h */,
 				9D9567822518A59B0071A7B6 /* DelegateView.m */,
 			);
-			path = AppTest;
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

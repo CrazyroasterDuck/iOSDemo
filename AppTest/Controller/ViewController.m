@@ -67,7 +67,7 @@
    [self.view addSubview:textField1];
 
    UITextField *textField2 = [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 200, 280, 30)];
+   CGRectMake(20, 170, 280, 30)];
    textField2.delegate = self;
    textField2.borderStyle = UITextBorderStyleRoundedRect;
    textField2.keyboardType = UIKeyboardTypeASCIICapable;
@@ -75,7 +75,7 @@
    [self.view addSubview:textField2];
 
    UITextField *textField3 = [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 250, 280, 30)];
+   CGRectMake(20, 190, 280, 30)];
    textField3.delegate = self;
    textField3.borderStyle = UITextBorderStyleRoundedRect;
    textField3.keyboardType = UIKeyboardTypePhonePad;
@@ -83,7 +83,7 @@
    [self.view addSubview:textField3];
 
    UITextField *textField4 = [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 300, 280, 30)];
+   CGRectMake(20, 210, 280, 30)];
    textField4.delegate = self;
    textField4.borderStyle = UITextBorderStyleRoundedRect;
    textField4.keyboardType = UIKeyboardTypeDecimalPad;
@@ -91,7 +91,7 @@
    [self.view addSubview:textField4];
 
    UITextField *textField5= [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 350, 280, 30)];
+   CGRectMake(20, 230, 280, 30)];
    textField5.delegate = self;
    textField5.borderStyle = UITextBorderStyleRoundedRect;
    textField5.keyboardType = UIKeyboardTypeEmailAddress;
@@ -99,7 +99,7 @@
    [self.view addSubview:textField5];
 
    UITextField *textField6= [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 400, 280, 30)];
+   CGRectMake(20, 250, 280, 30)];
    textField6.delegate = self;
    textField6.borderStyle = UITextBorderStyleRoundedRect;
    textField6.keyboardType = UIKeyboardTypeURL;
