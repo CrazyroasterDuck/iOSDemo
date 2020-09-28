@@ -31,14 +31,22 @@
     [self addTextFieldWithDifferentKeyboard];
     dView = [[DelegateView alloc] init];
     dView.delegate = self;
-    [dView setFrame:CGRectMake(20, 20, 200, 100)];
+    [dView setFrame:CGRectMake(20, 120, 200, 100)];
     [self.view addSubview:dView];
     isShow = YES;
+    
+    //设置导航栏的标题属性
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 62, 20)];
+    titleLabel.text = @"主页";
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.font = [UIFont systemFontOfSize:26];
+    self.navigationItem.titleView = titleLabel;
 }
 
 - (void)setBtnStyle{
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(([UIScreen mainScreen].bounds.size.width - 120) / 2, ([UIScreen mainScreen].bounds.size.height - 90) / 2, 120, 90)];
+    [btn setFrame:CGRectMake(([UIScreen mainScreen].bounds.size.width - 120) / 2, ([UIScreen mainScreen].bounds.size.height - 90) / 2 + 100, 120, 90)];
     [btn setTitle:@"click me!" forState:UIControlStateNormal];
     [btn setBackgroundColor:[UIColor greenColor]];
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
@@ -47,7 +55,7 @@
 }
 
 - (void)setLabelStyle{
-    label = [[UILabel alloc] initWithFrame:CGRectMake(([UIScreen mainScreen].bounds.size.width - 200) / 2, ([UIScreen mainScreen].bounds.size.height + 100) / 2, 200, 100)];
+    label = [[UILabel alloc] initWithFrame:CGRectMake(([UIScreen mainScreen].bounds.size.width - 200) / 2, ([UIScreen mainScreen].bounds.size.height + 100) / 2 + 100, 200, 100)];
     label.numberOfLines = 0; //不限制label标签的行数
     label.textColor = [UIColor blackColor];
     label.backgroundColor = [UIColor whiteColor];
@@ -60,14 +68,14 @@
 -(void) addTextFieldWithDifferentKeyboard{
 
    UITextField *textField1= [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 150, 280, 30)];
+   CGRectMake(20, 250, 280, 30)];
    textField1.delegate = self;
    textField1.borderStyle = UITextBorderStyleRoundedRect;
    textField1.placeholder = @"Default Keyboard";
    [self.view addSubview:textField1];
 
    UITextField *textField2 = [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 180, 280, 30)];
+   CGRectMake(20, 280, 280, 30)];
    textField2.delegate = self;
    textField2.borderStyle = UITextBorderStyleRoundedRect;
    textField2.keyboardType = UIKeyboardTypeASCIICapable;
@@ -75,7 +83,7 @@
    [self.view addSubview:textField2];
 
    UITextField *textField3 = [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 210, 280, 30)];
+   CGRectMake(20, 310, 280, 30)];
    textField3.delegate = self;
    textField3.borderStyle = UITextBorderStyleRoundedRect;
    textField3.keyboardType = UIKeyboardTypePhonePad;
@@ -83,7 +91,7 @@
    [self.view addSubview:textField3];
 
    UITextField *textField4 = [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 240, 280, 30)];
+   CGRectMake(20, 340, 280, 30)];
    textField4.delegate = self;
    textField4.borderStyle = UITextBorderStyleRoundedRect;
    textField4.keyboardType = UIKeyboardTypeDecimalPad;
@@ -91,7 +99,7 @@
    [self.view addSubview:textField4];
 
    UITextField *textField5= [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 270, 280, 30)];
+   CGRectMake(20, 370, 280, 30)];
    textField5.delegate = self;
    textField5.borderStyle = UITextBorderStyleRoundedRect;
    textField5.keyboardType = UIKeyboardTypeEmailAddress;
@@ -99,7 +107,7 @@
    [self.view addSubview:textField5];
 
    UITextField *textField6= [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 300, 280, 30)];
+   CGRectMake(20, 400, 280, 30)];
    textField6.delegate = self;
    textField6.borderStyle = UITextBorderStyleRoundedRect;
    textField6.keyboardType = UIKeyboardTypeURL;

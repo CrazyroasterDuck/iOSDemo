@@ -27,13 +27,19 @@
     
     FirstViewController *viewController1 = [[FirstViewController alloc] init];
     UINavigationController *nav1 = [[UINavigationController alloc]initWithRootViewController:viewController1];
-    nav1.view.backgroundColor = [UIColor redColor];
+    nav1.view.backgroundColor = [UIColor whiteColor];
     nav1.tabBarItem.title = @"首页";
+    nav1.tabBarItem.image = [[UIImage imageNamed:@"FirstImage"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    nav1.tabBarItem.selectedImage = [[UIImage imageNamed:@"FirstImage"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
     
     SecondViewController *viewController2 = [[SecondViewController alloc] init];
     UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:viewController2];
-    nav2.view.backgroundColor = [UIColor blueColor];
+    nav2.navigationItem.title = @"次页";
+    nav2.view.backgroundColor = [UIColor whiteColor];
     nav2.tabBarItem.title = @"次页";
+    nav2.tabBarItem.image = [[UIImage imageNamed:@"SecondImage"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    nav2.tabBarItem.selectedImage = [[UIImage imageNamed:@"SecondImage"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.viewControllers = @[nav1,nav2];
@@ -43,22 +49,6 @@
     return YES;
 }
 
-
-#pragma mark - UISceneSession lifecycle
-
-
-- (UISceneConfiguration *)application:(UIApplication *)application configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession options:(UISceneConnectionOptions *)options {
-    // Called when a new scene session is being created.
-    // Use this method to select a configuration to create the new scene with.
-    return [[UISceneConfiguration alloc] initWithName:@"Default Configuration" sessionRole:connectingSceneSession.role];
-}
-
-
-- (void)application:(UIApplication *)application didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions {
-    // Called when the user discards a scene session.
-    // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-    // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
-}
 
 
 #pragma mark - Core Data stack

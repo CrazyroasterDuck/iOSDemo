@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+//该方法用于支持分屏，iOS13引入的特性可以暂时不用管
 
 @interface SceneDelegate : UIResponder <UIWindowSceneDelegate>
 

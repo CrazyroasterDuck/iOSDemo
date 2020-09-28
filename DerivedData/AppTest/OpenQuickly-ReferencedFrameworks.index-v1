@@ -4,5 +4,6 @@
 <array>
 	<string>UIKit</string>
 	<string>CoreData</string>
+	<string>Foundation</string>
 </array>
 </plist>

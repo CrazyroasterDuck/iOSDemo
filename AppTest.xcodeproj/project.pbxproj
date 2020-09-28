@@ -17,10 +17,13 @@
 		9D95677925188EAA0071A7B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D95677825188EAA0071A7B6 /* main.m */; };
 		9D9567832518A59B0071A7B6 /* DelegateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9567822518A59B0071A7B6 /* DelegateView.m */; };
 		9DCBE66D25205ADF009EF8F9 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCBE66C25205ADF009EF8F9 /* SecondViewController.m */; };
-		9DCBE695252077F0009EF8F9 /* notifyInfoImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DCBE691252077F0009EF8F9 /* notifyInfoImage@2x.png */; };
-		9DCBE696252077F0009EF8F9 /* notifyInfoImage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DCBE692252077F0009EF8F9 /* notifyInfoImage@3x.png */; };
-		9DCBE697252077F0009EF8F9 /* recorderShareVideoButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DCBE693252077F0009EF8F9 /* recorderShareVideoButton@3x.png */; };
-		9DCBE698252077F0009EF8F9 /* recorderShareVideoButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DCBE694252077F0009EF8F9 /* recorderShareVideoButton@2x.png */; };
+		9DCBE697252077F0009EF8F9 /* FirstImage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DCBE693252077F0009EF8F9 /* FirstImage@3x.png */; };
+		9DCBE698252077F0009EF8F9 /* FirstImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DCBE694252077F0009EF8F9 /* FirstImage@2x.png */; };
+		9DCBE69C25208AAB009EF8F9 /* SecondImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DCBE69A25208AAB009EF8F9 /* SecondImage@2x.png */; };
+		9DCBE69D25208AAB009EF8F9 /* SecondImage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DCBE69B25208AAB009EF8F9 /* SecondImage@3x.png */; };
+		9DCBE6A12520B2A9009EF8F9 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCBE6A02520B2A9009EF8F9 /* DBManager.m */; };
+		9DCBE6A425217C22009EF8F9 /* PersonDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCBE6A325217C22009EF8F9 /* PersonDetailCell.m */; };
+		9DCBE6A72521B768009EF8F9 /* EditPersonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCBE6A62521B768009EF8F9 /* EditPersonView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,10 +44,16 @@
 		9D9567822518A59B0071A7B6 /* DelegateView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DelegateView.m; sourceTree = "<group>"; };
 		9DCBE66B25205ADF009EF8F9 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		9DCBE66C25205ADF009EF8F9 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
-		9DCBE691252077F0009EF8F9 /* notifyInfoImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notifyInfoImage@2x.png"; sourceTree = "<group>"; };
-		9DCBE692252077F0009EF8F9 /* notifyInfoImage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notifyInfoImage@3x.png"; sourceTree = "<group>"; };
-		9DCBE693252077F0009EF8F9 /* recorderShareVideoButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recorderShareVideoButton@3x.png"; sourceTree = "<group>"; };
-		9DCBE694252077F0009EF8F9 /* recorderShareVideoButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recorderShareVideoButton@2x.png"; sourceTree = "<group>"; };
+		9DCBE693252077F0009EF8F9 /* FirstImage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FirstImage@3x.png"; sourceTree = "<group>"; };
+		9DCBE694252077F0009EF8F9 /* FirstImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FirstImage@2x.png"; sourceTree = "<group>"; };
+		9DCBE69A25208AAB009EF8F9 /* SecondImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SecondImage@2x.png"; path = "AppTest/images/SecondImage@2x.png"; sourceTree = SOURCE_ROOT; };
+		9DCBE69B25208AAB009EF8F9 /* SecondImage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SecondImage@3x.png"; path = "AppTest/images/SecondImage@3x.png"; sourceTree = SOURCE_ROOT; };
+		9DCBE69F2520B2A9009EF8F9 /* DBManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
+		9DCBE6A02520B2A9009EF8F9 /* DBManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		9DCBE6A225217C22009EF8F9 /* PersonDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonDetailCell.h; sourceTree = "<group>"; };
+		9DCBE6A325217C22009EF8F9 /* PersonDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonDetailCell.m; sourceTree = "<group>"; };
+		9DCBE6A52521B768009EF8F9 /* EditPersonView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditPersonView.h; sourceTree = "<group>"; };
+		9DCBE6A62521B768009EF8F9 /* EditPersonView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditPersonView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +86,7 @@
 		9D95676225188EA70071A7B6 /* AppTest */ = {
 			isa = PBXGroup;
 			children = (
+				9DCBE69E2520B281009EF8F9 /* Data Structure */,
 				9DCBE699252079B2009EF8F9 /* New Group */,
 				9D96C6182520356D00199391 /* View */,
 				9D96C6172520354800199391 /* Controller */,
@@ -110,6 +120,10 @@
 			children = (
 				9D9567812518A59B0071A7B6 /* DelegateView.h */,
 				9D9567822518A59B0071A7B6 /* DelegateView.m */,
+				9DCBE6A225217C22009EF8F9 /* PersonDetailCell.h */,
+				9DCBE6A325217C22009EF8F9 /* PersonDetailCell.m */,
+				9DCBE6A52521B768009EF8F9 /* EditPersonView.h */,
+				9DCBE6A62521B768009EF8F9 /* EditPersonView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -117,12 +131,21 @@
 		9DCBE699252079B2009EF8F9 /* New Group */ = {
 			isa = PBXGroup;
 			children = (
-				9DCBE693252077F0009EF8F9 /* recorderShareVideoButton@3x.png */,
-				9DCBE694252077F0009EF8F9 /* recorderShareVideoButton@2x.png */,
-				9DCBE692252077F0009EF8F9 /* notifyInfoImage@3x.png */,
-				9DCBE691252077F0009EF8F9 /* notifyInfoImage@2x.png */,
+				9DCBE69A25208AAB009EF8F9 /* SecondImage@2x.png */,
+				9DCBE69B25208AAB009EF8F9 /* SecondImage@3x.png */,
+				9DCBE693252077F0009EF8F9 /* FirstImage@3x.png */,
+				9DCBE694252077F0009EF8F9 /* FirstImage@2x.png */,
 			);
 			path = "New Group";
+			sourceTree = "<group>";
+		};
+		9DCBE69E2520B281009EF8F9 /* Data Structure */ = {
+			isa = PBXGroup;
+			children = (
+				9DCBE69F2520B2A9009EF8F9 /* DBManager.h */,
+				9DCBE6A02520B2A9009EF8F9 /* DBManager.m */,
+			);
+			path = "Data Structure";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,12 +206,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D95677625188EAA0071A7B6 /* LaunchScreen.storyboard in Resources */,
-				9DCBE696252077F0009EF8F9 /* notifyInfoImage@3x.png in Resources */,
 				9D95677325188EAA0071A7B6 /* Assets.xcassets in Resources */,
+				9DCBE69C25208AAB009EF8F9 /* SecondImage@2x.png in Resources */,
 				9D95676E25188EA70071A7B6 /* Main.storyboard in Resources */,
-				9DCBE698252077F0009EF8F9 /* recorderShareVideoButton@2x.png in Resources */,
-				9DCBE695252077F0009EF8F9 /* notifyInfoImage@2x.png in Resources */,
-				9DCBE697252077F0009EF8F9 /* recorderShareVideoButton@3x.png in Resources */,
+				9DCBE698252077F0009EF8F9 /* FirstImage@2x.png in Resources */,
+				9DCBE697252077F0009EF8F9 /* FirstImage@3x.png in Resources */,
+				9DCBE69D25208AAB009EF8F9 /* SecondImage@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,8 +227,11 @@
 				9D95677125188EA70071A7B6 /* AppTest.xcdatamodeld in Sources */,
 				9DCBE66D25205ADF009EF8F9 /* SecondViewController.m in Sources */,
 				9D95676525188EA70071A7B6 /* AppDelegate.m in Sources */,
+				9DCBE6A72521B768009EF8F9 /* EditPersonView.m in Sources */,
 				9D95676825188EA70071A7B6 /* SceneDelegate.m in Sources */,
 				9D9567832518A59B0071A7B6 /* DelegateView.m in Sources */,
+				9DCBE6A12520B2A9009EF8F9 /* DBManager.m in Sources */,
+				9DCBE6A425217C22009EF8F9 /* PersonDetailCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,7 +307,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -333,7 +359,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
