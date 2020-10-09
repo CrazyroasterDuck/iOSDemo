@@ -21,7 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSMutableArray *)findAll;
 - (BOOL)saveData:(NSString *)registerNumber name:(NSString *)name
       department:(NSString *)department year:(NSString *)year;
-
+- (void)deleteInfo:(NSArray *)arr;
+- (BOOL)findPersonByRegno:(NSString *)registerNumber;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -20,6 +20,7 @@ static sqlite3_stmt *statement = nil;
     }
     return sharedInstance;
 }
+
 - (BOOL)createDB{
     NSString *docDir;
     NSArray *dirPaths;
@@ -38,7 +39,7 @@ static sqlite3_stmt *statement = nil;
         if(sqlite3_open(dbpath, &database) == SQLITE_OK){
             char *errMsg;
             const char *sql_stmt =
-            "create table if not exists studentsDetail(regno integer primary key,name text,department text,year text)";
+            "create table if not exists studentsDetail(regno integer primary key,name text,department text,year text);";
             //执行数据库创建语句
             if(sqlite3_exec(database, sql_stmt, NULL, NULL, &errMsg) != SQLITE_OK){
                 isSuccess = NO;
@@ -52,28 +53,42 @@ static sqlite3_stmt *statement = nil;
     }
     return isSuccess;
 }
+
+//对保存逻辑进行进行更新和插入的判断
 - (BOOL)saveData:(NSString *)registerNumber name:(NSString *)name
       department:(NSString *)department year:(NSString *)year{
+    BOOL isExist = [self findPersonByRegno:registerNumber];
     const char *dbpath = [databasePath UTF8String];
     if(sqlite3_open(dbpath, &database) == SQLITE_OK){
-        NSString *insertSQL = [NSString stringWithFormat:@"insert into studentDetail (regno,name,department,year) values(\"%ld\",\"%@\",\"%@\",\"%@\")",
-                               (long)[registerNumber integerValue],name,department,year];
-        const char *insert_stmt = [insertSQL UTF8String];
-        sqlite3_prepare_v2(database, insert_stmt, -1, &statement, NULL);
-        if(sqlite3_step(statement) == SQLITE_DONE){
-            return YES;
+        NSString *saveSQL;
+        if(isExist){
+            saveSQL = [NSString stringWithFormat:@"update studentsDetail set name='%@',department='%@',year='%@' where regno= %ld",name,department,year,[registerNumber integerValue]];
+        }else{
+            saveSQL = [NSString stringWithFormat:@"INSERT INTO studentsDetail (regno,name,department,year)VALUES(%ld,'%@','%@','%@');",
+                        [registerNumber integerValue],name,department,year];
         }
-        sqlite3_reset(statement);
+        const char *insert_stmt = [saveSQL UTF8String];
+        char *errMsg;
+        int result = sqlite3_exec(database, insert_stmt, NULL, NULL, &errMsg);
+        sqlite3_close(database);
+        if( result == SQLITE_OK){
+            return YES;
+        } else{
+            NSLog(@"%s",errMsg);
+        }
     }
     return NO;
+    
 }
+
 - (NSMutableArray *)findAll{
     const char *dbpath = [databasePath UTF8String];
-    if(sqlite3_open(dbpath, &database)){
+    if(sqlite3_open(dbpath, &database) == SQLITE_OK){
 //        NSString *querySQL = [NSString stringWithFormat:@"select name,department,year from studentDetail where regno=\"%@\"",registerNumber];
-        const char *query_stmt = "select regno, name,department,year from studentDetail";
+        const char *query_stmt = "select regno, name,department,year from studentsDetail order by regno asc;";
         NSMutableArray *resultArray = [[NSMutableArray alloc] init];
-        if(sqlite3_prepare_v2(database, query_stmt, -1, &statement, NULL) == SQLITE_OK){
+        int result = sqlite3_prepare_v2(database, query_stmt, -1, &statement, NULL);
+        if(result == SQLITE_OK){
             NSArray *arry;
             while(sqlite3_step(statement) ==  SQLITE_ROW){
                 //查询到的结果可能不止一条，直到sqlite3_step(stmt) != SQLITE_ROW,查询结束
@@ -83,12 +98,43 @@ static sqlite3_stmt *statement = nil;
                 NSString *year = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement,3)];
                 arry = [[NSArray alloc] initWithObjects:regno,name,department,year, nil];
                 [resultArray addObject:arry];
-                return resultArray;
             }
-            sqlite3_reset(statement);
+            return resultArray;
         }
+        sqlite3_reset(statement);
     }
     NSLog(@"Not found");
     return nil;
+}
+
+- (BOOL)findPersonByRegno:(NSString *)registerNumber{
+    BOOL isSuccess = NO;
+    const char *dbpath = [databasePath UTF8String];
+    if(sqlite3_open(dbpath, &database) == SQLITE_OK){
+    NSString *querySQL = [NSString stringWithFormat:@"select name,department,year from studentsDetail where regno = %ld",[registerNumber integerValue]];
+        if(sqlite3_prepare_v2(database, [querySQL UTF8String], -1, &statement,NULL) == SQLITE_OK){
+            if(sqlite3_step(statement) ==  SQLITE_ROW){
+                isSuccess = YES;
+            }
+        }
+        sqlite3_reset(statement);
+    }
+    sqlite3_close(database);
+    NSLog(@"Not found");
+    return isSuccess;
+}
+
+//只有四个属性相同才准予删除
+- (void)deleteInfo:(NSArray *)arr {
+    const char *dbpath = [databasePath UTF8String];
+    NSString *regno = arr[0];
+    NSString *name = arr[1];
+    NSString *dept = arr[2];
+    NSString *year = arr[3];
+    if(sqlite3_open(dbpath, &database) == SQLITE_OK){
+        char *errmsg;
+        const char *sql_del = [[NSString stringWithFormat:@"delete from studentsDetail where regno = %ld and name = '%@' and department = '%@' and year = '%@';",(long)[regno integerValue],name,dept,year] UTF8String];
+        int result = sqlite3_exec(database, sql_del, NULL, NULL, &errmsg);
+    }
 }
 @end

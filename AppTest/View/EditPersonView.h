@@ -9,10 +9,17 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+@protocol DealPersonInfoDelegate <NSObject>
+
+@required
+- (void)savePersonInfo:(NSArray *)arr;
+- (void)delPersonInfo:(NSArray *)arr;
+@end
 
 @interface EditPersonView : UIView
-@property(nonatomic,weak) id<UITextFieldDelegate> delegate;
+@property(nonatomic,weak) id<UITextFieldDelegate,DealPersonInfoDelegate> delegate;
 - (instancetype)initWithFrame:(CGRect)frame withDelegate:(id)delegate;
+- (void)setPersonInfo:(NSArray *)arr;
 @end
 
 NS_ASSUME_NONNULL_END

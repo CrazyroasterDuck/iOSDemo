@@ -10,8 +10,11 @@
 #import "FirstViewController.h"
 #import "PersonDetailCell.h"
 #import "EditPersonView.h"
+#import "DBManager.h"
 
-@interface SecondViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+
+@interface SecondViewController ()<UITableViewDataSource,UITableViewDelegate,
+    UITextFieldDelegate,DealPersonInfoDelegate>
 {
     UITableView *tableView;
     NSMutableArray *myData;
@@ -30,6 +33,7 @@
     [self initEditView];
     tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
     [self.view addGestureRecognizer:tap];
+    tap.enabled = NO;
     
 }
 
@@ -47,13 +51,18 @@
 }
 
 - (void)initData{
-    NSArray *array1 = [[NSArray alloc] initWithObjects:@"0001",@"Jack",@"离岸",@"2019", nil];
-    NSArray *array2 = [[NSArray alloc] initWithObjects:@"0002",@"Rose",@"支付",@"2020", nil];
-    NSArray *array3 = [[NSArray alloc] initWithObjects:@"0003",@"Jack",@"离岸2",@"2021", nil];
-    NSArray *array4 = [[NSArray alloc] initWithObjects:@"0004",@"Rose",@"支付2",@"2022", nil];
-    NSArray *array5 = [[NSArray alloc] initWithObjects:@"0005",@"Jack",@"离岸3",@"2023", nil];
-    NSArray *array6 = [[NSArray alloc] initWithObjects:@"0006",@"Rose",@"支付3",@"2024", nil];
-    myData = [[NSMutableArray alloc] initWithObjects:array1,array2,array3,array4,array5,array6, nil];
+//    NSArray *array1 = [[NSArray alloc] initWithObjects:@"0001",@"Jack",@"离岸",@"2019", nil];
+//    NSArray *array2 = [[NSArray alloc] initWithObjects:@"0002",@"Rose",@"支付",@"2020", nil];
+//    NSArray *array3 = [[NSArray alloc] initWithObjects:@"0003",@"Jack",@"离岸2",@"2021", nil];
+//    NSArray *array4 = [[NSArray alloc] initWithObjects:@"0004",@"Rose",@"支付2",@"2022", nil];
+//    NSArray *array5 = [[NSArray alloc] initWithObjects:@"0005",@"Jack",@"离岸3",@"2023", nil];
+//    NSArray *array6 = [[NSArray alloc] initWithObjects:@"0006",@"Rose",@"支付3",@"2024", nil];
+//    myData = [[NSMutableArray alloc] initWithObjects:array1,array2,array3,array4,array5,array6, nil];
+//    for(NSArray *arr in myData){
+//        BOOL isSuccess = [[DBManager getSharedInstance] saveData:arr[0] name:arr[1] department:arr[2] year:arr[3]];
+//        NSLog(@"存储数据%@",isSuccess);
+//    }
+    myData = [[DBManager getSharedInstance] findAll];
 }
 
 - (void)addNavigationBar{
@@ -72,6 +81,18 @@
 //点击空白处，收起键盘
 - (void)viewTapped:(UITapGestureRecognizer *)tap{
     [self.view endEditing:YES];
+}
+
+#pragma mark - dealPersonInfoDelegate methods
+- (void)savePersonInfo:(NSArray *)arr{
+    [[DBManager getSharedInstance]saveData:arr[0] name:arr[1] department:arr[2] year:arr[3]];
+    [self initData];
+    [tableView reloadData];
+}
+- (void)delPersonInfo:(NSArray *)arr{
+    [[DBManager getSharedInstance]deleteInfo:arr];
+    [self initData];
+    [tableView reloadData];
 }
 
 //- (void)navButtonClicked{
@@ -123,7 +144,7 @@
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [myData count];
+    return myData ? [myData count] : 0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -164,10 +185,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:
  (NSIndexPath *)indexPath{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    NSLog(@"Section:%ld Row:%ld selected and its data is %@",
-          (long)indexPath.section,(long)indexPath.row,cell.textLabel.text);
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//    NSLog(@"Section:%ld Row:%ld selected and its data is %@",
+//          (long)indexPath.section,(long)indexPath.row,cell.textLabel.text);
+    NSArray *arr = myData[indexPath.row];
+    [editView setPersonInfo:arr];
 }
 
 // pragma mark is used for easy access of code in Xcode
@@ -176,13 +199,14 @@
 // This method is called once we click inside the textField
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
    NSLog(@"Text field did begin editing");
-    //进入编辑状态的时候，手势开始生效
-    tap.cancelsTouchesInView = NO;
+    //进入编辑状态的时候，手势开始生效，有可能导致手势冲突
+    tap.enabled = YES;
 }
 
 // This method is called once we complete editing
 -(void)textFieldDidEndEditing:(UITextField *)textField{
    NSLog(@"Text field ended editing");
+    tap.enabled = NO;
 }
 
 // This method enables or disables the processing of return key

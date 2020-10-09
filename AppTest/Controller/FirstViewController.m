@@ -8,16 +8,17 @@
 
 #import "FirstViewController.h"
 #import "DelegateView.h"
+#import "BlockViewController.h"
 
 @interface FirstViewController ()<ViewDelegate,UITextFieldDelegate>
 {
     UIButton *btn;
+    UIButton *blockBtn;
     UILabel *label;
+    UILabel *blockLbl;
     DelegateView *dView;
     BOOL isShow;
 }
-- (void)setBtnStyle;
-- (void)setLabelStyle;
 @end
 
 @implementation FirstViewController
@@ -26,6 +27,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = UIColor.brownColor;
+    [self initBlockView];
     [self setBtnStyle];
     [self setLabelStyle];
     [self addTextFieldWithDifferentKeyboard];
@@ -44,12 +46,35 @@
     self.navigationItem.titleView = titleLabel;
 }
 
+- (void)initBlockView{
+    blockBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [blockBtn setFrame:CGRectMake(10, self.view.bounds.size.height - 400, 100, 75)];
+    [blockBtn setBackgroundColor:[UIColor whiteColor]];
+    [blockBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [blockBtn setTitle:@"block button" forState:UIControlStateNormal];
+    [blockBtn addTarget:self action:@selector(blockBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    //设置边框颜色
+    blockBtn.layer.borderColor = [[UIColor blackColor] CGColor];
+    //设置边框宽度
+    blockBtn.layer.borderWidth = 1.0f;
+    //给按钮设置角的弧度
+    blockBtn.layer.cornerRadius = 4.0f;
+    [self.view addSubview:blockBtn];
+    
+    blockLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, self.view.bounds.size.height - 290, 200, 150)];
+    blockLbl.textAlignment = NSTextAlignmentCenter;
+    blockLbl.textColor = [UIColor blackColor];
+    blockLbl.backgroundColor = [UIColor lightGrayColor];
+    [self.view addSubview:blockLbl];
+}
+
 - (void)setBtnStyle{
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(([UIScreen mainScreen].bounds.size.width - 120) / 2, ([UIScreen mainScreen].bounds.size.height - 90) / 2 + 100, 120, 90)];
     [btn setTitle:@"click me!" forState:UIControlStateNormal];
     [btn setBackgroundColor:[UIColor greenColor]];
-    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+    
+    
     [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
 }
@@ -117,6 +142,19 @@
 
 - (void)btnClicked:(UIButton *)btn{
     label.hidden = !label.hidden;
+}
+
+- (void)blockBtnClicked:(UIButton *)blockBtn{
+    BlockViewController *blockVC = [[BlockViewController alloc] init];
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:blockVC];
+    [self presentViewController:blockVC animated:YES completion:^{}];
+    __weak typeof(self) weakSelf = self;
+    [blockVC setBlock:^(NSString * _Nonnull text) {
+        //通过以下方式换成强引用,或者将上面的__weak换成__block
+        __typeof__(self) strongSelf = weakSelf;
+        strongSelf->blockLbl.text = text;
+    }];
+    
 }
 
 #pragma mark -ViewDelegate
