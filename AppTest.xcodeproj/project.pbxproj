@@ -25,6 +25,10 @@
 		9DCBE6A425217C22009EF8F9 /* PersonDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCBE6A325217C22009EF8F9 /* PersonDetailCell.m */; };
 		9DCBE6A72521B768009EF8F9 /* EditPersonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCBE6A62521B768009EF8F9 /* EditPersonView.m */; };
 		9DCC5C14253001A30090C713 /* BlockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC5C13253001A30090C713 /* BlockViewController.m */; };
+		9DCC5C1C253053700090C713 /* GCDTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC5C1B253053700090C713 /* GCDTest.m */; };
+		9DCC5C67253196440090C713 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC5C66253196440090C713 /* Person.m */; };
+		9DCC5C6A2531A4540090C713 /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC5C692531A4540090C713 /* CustomButton.m */; };
+		9DCC5C702531ABBF0090C713 /* NetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC5C6F2531ABBF0090C713 /* NetViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +61,14 @@
 		9DCBE6A62521B768009EF8F9 /* EditPersonView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditPersonView.m; sourceTree = "<group>"; };
 		9DCC5C12253001A30090C713 /* BlockViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlockViewController.h; sourceTree = "<group>"; };
 		9DCC5C13253001A30090C713 /* BlockViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlockViewController.m; sourceTree = "<group>"; };
+		9DCC5C1A253053700090C713 /* GCDTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDTest.h; sourceTree = "<group>"; };
+		9DCC5C1B253053700090C713 /* GCDTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCDTest.m; sourceTree = "<group>"; };
+		9DCC5C65253196440090C713 /* Person.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		9DCC5C66253196440090C713 /* Person.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		9DCC5C682531A4540090C713 /* CustomButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
+		9DCC5C692531A4540090C713 /* CustomButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomButton.m; sourceTree = "<group>"; };
+		9DCC5C6E2531ABBF0090C713 /* NetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetViewController.h; sourceTree = "<group>"; };
+		9DCC5C6F2531ABBF0090C713 /* NetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +115,8 @@
 				9D95677725188EAA0071A7B6 /* Info.plist */,
 				9D95677825188EAA0071A7B6 /* main.m */,
 				9D95676F25188EA70071A7B6 /* AppTest.xcdatamodeld */,
+				9DCC5C1A253053700090C713 /* GCDTest.h */,
+				9DCC5C1B253053700090C713 /* GCDTest.m */,
 			);
 			path = AppTest;
 			sourceTree = "<group>";
@@ -116,6 +130,8 @@
 				9DCBE66C25205ADF009EF8F9 /* SecondViewController.m */,
 				9DCC5C12253001A30090C713 /* BlockViewController.h */,
 				9DCC5C13253001A30090C713 /* BlockViewController.m */,
+				9DCC5C6E2531ABBF0090C713 /* NetViewController.h */,
+				9DCC5C6F2531ABBF0090C713 /* NetViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -129,6 +145,8 @@
 				9DCBE6A325217C22009EF8F9 /* PersonDetailCell.m */,
 				9DCBE6A52521B768009EF8F9 /* EditPersonView.h */,
 				9DCBE6A62521B768009EF8F9 /* EditPersonView.m */,
+				9DCC5C682531A4540090C713 /* CustomButton.h */,
+				9DCC5C692531A4540090C713 /* CustomButton.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -149,6 +167,8 @@
 			children = (
 				9DCBE69F2520B2A9009EF8F9 /* DBManager.h */,
 				9DCBE6A02520B2A9009EF8F9 /* DBManager.m */,
+				9DCC5C65253196440090C713 /* Person.h */,
+				9DCC5C66253196440090C713 /* Person.m */,
 			);
 			path = "Data Structure";
 			sourceTree = "<group>";
@@ -233,8 +253,12 @@
 				9DCBE66D25205ADF009EF8F9 /* SecondViewController.m in Sources */,
 				9D95676525188EA70071A7B6 /* AppDelegate.m in Sources */,
 				9DCBE6A72521B768009EF8F9 /* EditPersonView.m in Sources */,
+				9DCC5C1C253053700090C713 /* GCDTest.m in Sources */,
 				9D95676825188EA70071A7B6 /* SceneDelegate.m in Sources */,
+				9DCC5C702531ABBF0090C713 /* NetViewController.m in Sources */,
 				9DCC5C14253001A30090C713 /* BlockViewController.m in Sources */,
+				9DCC5C67253196440090C713 /* Person.m in Sources */,
+				9DCC5C6A2531A4540090C713 /* CustomButton.m in Sources */,
 				9D9567832518A59B0071A7B6 /* DelegateView.m in Sources */,
 				9DCBE6A12520B2A9009EF8F9 /* DBManager.m in Sources */,
 				9DCBE6A425217C22009EF8F9 /* PersonDetailCell.m in Sources */,

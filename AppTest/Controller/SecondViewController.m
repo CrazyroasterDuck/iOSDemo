@@ -11,7 +11,11 @@
 #import "PersonDetailCell.h"
 #import "EditPersonView.h"
 #import "DBManager.h"
+#import "Person.h"
+#define MainWidth [UIScreen mainScreen].bounds.size.width
+#define MainHeight [UIScreen mainScreen].bounds.size.height
 
+static NSString *notifiationName = @"nt";
 
 @interface SecondViewController ()<UITableViewDataSource,UITableViewDelegate,
     UITextFieldDelegate,DealPersonInfoDelegate>
@@ -20,6 +24,7 @@
     NSMutableArray *myData;
     EditPersonView *editView;
     UITapGestureRecognizer *tap;
+    Person *person;
 }
 @end
 
@@ -34,42 +39,32 @@
     tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
     [self.view addGestureRecognizer:tap];
     tap.enabled = NO;
-    
+    //注册监听器,由DBManager的对象来监听person对象的消息--使用notification方式进行通行
+    [[NSNotificationCenter defaultCenter] addObserver:[DBManager getSharedInstance] selector:@selector(savePersonInfo:) name:notifiationName object:person];
+    //注册监听对象———使用KVO形式进行
+//    [[DBManager getSharedInstance] addObserver:self forKeyPath:@"isSavedSucess" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)initEditView{
-    editView = [[EditPersonView alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 200, [UIScreen mainScreen].bounds.size.width, 100) withDelegate:self];
+    editView = [[EditPersonView alloc] initWithFrame:CGRectMake(0, MainHeight - 200, MainWidth, 100) withDelegate:self];
     [self.view addSubview:editView];
 }
 - (void)initTableView{
-    tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 200)];
+    tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, MainWidth, MainHeight - 200)];
     tableView.backgroundColor = self.view.backgroundColor;
     [self.view addSubview:tableView];
     tableView.delegate =  self;
+    //data source方式示例
     tableView.dataSource = self;
     tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 }
 
 - (void)initData{
-//    NSArray *array1 = [[NSArray alloc] initWithObjects:@"0001",@"Jack",@"离岸",@"2019", nil];
-//    NSArray *array2 = [[NSArray alloc] initWithObjects:@"0002",@"Rose",@"支付",@"2020", nil];
-//    NSArray *array3 = [[NSArray alloc] initWithObjects:@"0003",@"Jack",@"离岸2",@"2021", nil];
-//    NSArray *array4 = [[NSArray alloc] initWithObjects:@"0004",@"Rose",@"支付2",@"2022", nil];
-//    NSArray *array5 = [[NSArray alloc] initWithObjects:@"0005",@"Jack",@"离岸3",@"2023", nil];
-//    NSArray *array6 = [[NSArray alloc] initWithObjects:@"0006",@"Rose",@"支付3",@"2024", nil];
-//    myData = [[NSMutableArray alloc] initWithObjects:array1,array2,array3,array4,array5,array6, nil];
-//    for(NSArray *arr in myData){
-//        BOOL isSuccess = [[DBManager getSharedInstance] saveData:arr[0] name:arr[1] department:arr[2] year:arr[3]];
-//        NSLog(@"存储数据%@",isSuccess);
-//    }
     myData = [[DBManager getSharedInstance] findAll];
+    person = [[Person alloc]init];
 }
 
 - (void)addNavigationBar{
-//    UIBarButtonItem *navButton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(navButtonClicked)];
-//    [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
-//    [self.navigationItem setLeftBarButtonItem:navButton];
-    
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 62, 20)];
     titleLabel.text = @"次页";
     titleLabel.backgroundColor = [UIColor clearColor];
@@ -78,6 +73,21 @@
     self.navigationItem.titleView = titleLabel;
 }
 
+// 使用KVO方式必须实现该方法
+//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
+//    if([keyPath isEqualToString:@"isSavedSucess"]){
+//        DBManager *db = object;
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"SAVE RESULT" message:[NSString stringWithFormat:@"Save person info is %@ !!",db.isSavedSucess ? @"succed" : @"failed" ] delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+//        alertView.alertViewStyle = UIAlertViewStyleDefault;
+//        alertView.frame = CGRectMake(MainWidth / 2, MainHeight /2, 200, 200);
+//        [self.view addSubview:alertView];
+//        [alertView show];
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [alertView setHidden:YES];
+//        });
+//    }
+//}
+
 //点击空白处，收起键盘
 - (void)viewTapped:(UITapGestureRecognizer *)tap{
     [self.view endEditing:YES];
@@ -85,7 +95,14 @@
 
 #pragma mark - dealPersonInfoDelegate methods
 - (void)savePersonInfo:(NSArray *)arr{
-    [[DBManager getSharedInstance]saveData:arr[0] name:arr[1] department:arr[2] year:arr[3]];
+//    [[DBManager getSharedInstance]saveData:arr[0] name:arr[1] department:arr[2] year:arr[3]];
+    
+    //使用notification方法来传递消息
+    person.registerNumber = arr[0];
+    person.name = arr[1];
+    person.department = arr[2];
+    person.year = arr[3];
+    [[NSNotificationCenter defaultCenter] postNotificationName:notifiationName object:person];
     [self initData];
     [tableView reloadData];
 }
@@ -95,49 +112,15 @@
     [tableView reloadData];
 }
 
-//- (void)navButtonClicked{
-//    SecondViewController *secondVC = [[SecondViewController alloc] init];
-//    [self.navigationController pushViewController:secondVC animated:YES];
-//}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 #pragma mark - Table View Data source
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"cellID";
-    
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     PersonDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if(cell == nil){
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell = [[PersonDetailCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier frame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 60)];
     }
-//    NSString *stringForCell;
-//    if (indexPath.section == 0) {
-//        stringForCell= [myData objectAtIndex:indexPath.row];
-//
-//    }else if (indexPath.section == 1){
-//        stringForCell= [myData objectAtIndex:indexPath.row+ [myData count]/2];
-//
-//    }
-//    [cell.textLabel setText:stringForCell];
     NSArray *array;
-//    if (indexPath.section == 0) {
-//        array= [myData objectAtIndex:indexPath.row];
-//
-//    }else if (indexPath.section == 1){
-//        array= [myData objectAtIndex:indexPath.row + [myData count]/2];
-//
-//    }
     array= [myData objectAtIndex:indexPath.row];
     [cell setPersonDetailInfo:array[0] name:array[1] department:array[2] year:array[3]];
     return cell;
@@ -185,10 +168,6 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:
  (NSIndexPath *)indexPath{
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//    NSLog(@"Section:%ld Row:%ld selected and its data is %@",
-//          (long)indexPath.section,(long)indexPath.row,cell.textLabel.text);
     NSArray *arr = myData[indexPath.row];
     [editView setPersonInfo:arr];
 }
@@ -214,5 +193,8 @@
     [textField resignFirstResponder];
     return YES;
 }
-
+//
+//- (void)dealloc{
+//    [[DBManager getSharedInstance] removeObserver:self forKeyPath:@"isSavedSucess"];
+//}
 @end

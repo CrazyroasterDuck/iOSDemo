@@ -54,6 +54,11 @@ static sqlite3_stmt *statement = nil;
     return isSuccess;
 }
 
+- (void)savePersonInfo:(NSNotification *)notification{
+    Person *person =  notification.object;
+    self.isSavedSucess = [self saveData:person.registerNumber name:person.name department:person.department year:person.year];
+}
+
 //对保存逻辑进行进行更新和插入的判断
 - (BOOL)saveData:(NSString *)registerNumber name:(NSString *)name
       department:(NSString *)department year:(NSString *)year{
@@ -81,10 +86,10 @@ static sqlite3_stmt *statement = nil;
     
 }
 
+
 - (NSMutableArray *)findAll{
     const char *dbpath = [databasePath UTF8String];
     if(sqlite3_open(dbpath, &database) == SQLITE_OK){
-//        NSString *querySQL = [NSString stringWithFormat:@"select name,department,year from studentDetail where regno=\"%@\"",registerNumber];
         const char *query_stmt = "select regno, name,department,year from studentsDetail order by regno asc;";
         NSMutableArray *resultArray = [[NSMutableArray alloc] init];
         int result = sqlite3_prepare_v2(database, query_stmt, -1, &statement, NULL);
@@ -134,7 +139,11 @@ static sqlite3_stmt *statement = nil;
     if(sqlite3_open(dbpath, &database) == SQLITE_OK){
         char *errmsg;
         const char *sql_del = [[NSString stringWithFormat:@"delete from studentsDetail where regno = %ld and name = '%@' and department = '%@' and year = '%@';",(long)[regno integerValue],name,dept,year] UTF8String];
-        int result = sqlite3_exec(database, sql_del, NULL, NULL, &errmsg);
+        sqlite3_exec(database, sql_del, NULL, NULL, &errmsg);
     }
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 @end

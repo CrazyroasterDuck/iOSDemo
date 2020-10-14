@@ -16,6 +16,10 @@
 
 @implementation AppDelegate
 
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary<UIApplicationLaunchOptionsKey,id> *)launchOptions{
+    NSLog(@"app即将完成初始化！");
+    return YES;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -47,6 +51,27 @@
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+//处理UI生命周期
+- (void)applicationWillResignActive:(UIApplication *)application {
+    NSLog(@"程序将要失去焦点");
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    NSLog(@"程序已经进入后台");
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    NSLog(@"程序将要进入前台");
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    NSLog(@"程序获得焦点");
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    NSLog(@"程序将要终止");
 }
 
 

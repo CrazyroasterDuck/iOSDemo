@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
-
+#import "Person.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DBManager : NSObject
 {
     NSString *databasePath;
 }
+
+@property(nonatomic) BOOL isSavedSucess;
 
 + (DBManager*)getSharedInstance;
 - (BOOL)createDB;
@@ -23,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
       department:(NSString *)department year:(NSString *)year;
 - (void)deleteInfo:(NSArray *)arr;
 - (BOOL)findPersonByRegno:(NSString *)registerNumber;
+- (void)savePersonInfo:(Person *)person;
 @end
 
 NS_ASSUME_NONNULL_END

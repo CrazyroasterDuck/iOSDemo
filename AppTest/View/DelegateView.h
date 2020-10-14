@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
-/*协议定义*/
+/*协议定义 delegate通信方式示例*/
 @protocol ViewDelegate <NSObject>
 @required
 - (void)showViewContent;

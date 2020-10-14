@@ -13,6 +13,7 @@
     UITextField *textField;
     UIButton *backBtn;
     UILabel *timeLabel;
+    UILabel *blockLabel;
     UIScrollView *scrollView;
 }
 @end
@@ -23,6 +24,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initView];
+    [self listenInput];
     
     //定义一个计时器，每秒钟调用setTime方法
     NSTimer *timer = [NSTimer timerWithTimeInterval:1.0  target:self selector:@selector(setTime) userInfo:nil repeats:YES];
@@ -34,6 +36,22 @@
     [self.thread start];
 }
 
+- (void)listenInput{
+    /*
+     KVO通信方式示例
+     监听textField的text属性，当其值发生改变时，
+     vc获取到其值，并显示到blockLabel中
+     */
+    [textField addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:NULL];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
+    if([keyPath isEqualToString:@"text"] && [object isKindOfClass:[UITextField class]]){
+        textField = object;
+        blockLabel.text = textField.text;
+    }
+}
+
 - (void)initView{
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
@@ -43,6 +61,7 @@
     textField.borderStyle = UITextBorderStyleRoundedRect;
     textField.placeholder = @"请输入内容";
     [self.view addSubview:textField];
+//    [textField addTarget:self action:@selector(text) forControlEvents:UIControlEventEditingChanged];
     
     backBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [backBtn setFrame:CGRectMake(80, 100, 100, 75)];
@@ -69,6 +88,13 @@
     timeLabel.backgroundColor = [UIColor whiteColor];
     timeLabel.textAlignment = NSTextAlignmentCenter;
     [scrollView addSubview:timeLabel];
+    
+    blockLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 350, 200, 100)];
+    blockLabel.backgroundColor = [UIColor lightTextColor];
+    blockLabel.textAlignment = NSTextAlignmentCenter;
+    blockLabel.text = @"KVO测试";
+    blockLabel.numberOfLines = 0;
+    [self.view addSubview:blockLabel];
 }
 
 - (void)run{
@@ -117,14 +143,14 @@
     return YES;
 }
 
-/*
-#pragma mark - Navigation
+//- (void)textFieldDidChangeSelection:(UITextField *)textField{
+//    if(textField.markedTextRange == nil){
+//        blockLabel.text = textField.text;
+//    }
+//}
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)dealloc{
+    [textField removeObserver:self forKeyPath:@"text"];
 }
-*/
 
 @end

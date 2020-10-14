@@ -9,11 +9,14 @@
 #import "FirstViewController.h"
 #import "DelegateView.h"
 #import "BlockViewController.h"
+#import "CustomButton.h"
+#import "NetViewController.h"
 
 @interface FirstViewController ()<ViewDelegate,UITextFieldDelegate>
 {
     UIButton *btn;
     UIButton *blockBtn;
+    UIButton *netBtn;
     UILabel *label;
     UILabel *blockLbl;
     DelegateView *dView;
@@ -23,6 +26,12 @@
 
 @implementation FirstViewController
 
+//self.view = nil的时候加载
+-(void)loadView{
+    [super loadView];
+    NSLog(@"%s",__func__);
+}
+//self.view相关视图加载
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -37,6 +46,12 @@
     [self.view addSubview:dView];
     isShow = YES;
     
+    netBtn = [[CustomButton alloc] init];
+    [netBtn setFrame:CGRectMake(250, 120, 150, 75)];
+    [netBtn setTitle:@"进入网络模块" forState:UIControlStateNormal];
+    [netBtn addTarget:self action:@selector(netBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:netBtn];
+    
     //设置导航栏的标题属性
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 62, 20)];
     titleLabel.text = @"主页";
@@ -46,19 +61,51 @@
     self.navigationItem.titleView = titleLabel;
 }
 
+//视图将要被展示时使用，present和push等改变视图层次时使用
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    NSLog(@"%s",__func__);
+}
+//子控件大小未被设置好
+-(void)viewWillLayoutSubviews{
+    [super viewWillLayoutSubviews];
+    NSLog(@"%s",__func__);
+}
+//子控件的大小已被设置好
+-(void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+    NSLog(@"%s",__func__);
+}
+
+//视图渲染完成后调用，与viewDidAppear配套使用
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    NSLog(@"%s",__func__);
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    NSLog(@"%s",__func__);
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    NSLog(@"%s",__func__);
+}
+
+- (void)didReceiveMemoryWarning{
+    //收到内存警告时调用
+}
+
+-(void)dealloc{
+    NSLog(@"%s",__func__);
+}
+
 - (void)initBlockView{
-    blockBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [blockBtn setFrame:CGRectMake(10, self.view.bounds.size.height - 400, 100, 75)];
-    [blockBtn setBackgroundColor:[UIColor whiteColor]];
-    [blockBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    blockBtn = [[CustomButton alloc] init];
+    [blockBtn setFrame:CGRectMake(10, self.view.bounds.size.height - 400, 120, 75)];
     [blockBtn setTitle:@"block button" forState:UIControlStateNormal];
     [blockBtn addTarget:self action:@selector(blockBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    //设置边框颜色
-    blockBtn.layer.borderColor = [[UIColor blackColor] CGColor];
-    //设置边框宽度
-    blockBtn.layer.borderWidth = 1.0f;
-    //给按钮设置角的弧度
-    blockBtn.layer.cornerRadius = 4.0f;
     [self.view addSubview:blockBtn];
     
     blockLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, self.view.bounds.size.height - 290, 200, 150)];
@@ -74,7 +121,7 @@
     [btn setTitle:@"click me!" forState:UIControlStateNormal];
     [btn setBackgroundColor:[UIColor greenColor]];
     
-    
+    //MV的target-action通信方式
     [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
 }
@@ -144,9 +191,13 @@
     label.hidden = !label.hidden;
 }
 
+- (void)netBtnClicked:(UIButton *)btn{
+    NetViewController *nVC = [[NetViewController alloc] init];
+    [self presentViewController:nVC animated:YES completion:^{}];
+}
+
 - (void)blockBtnClicked:(UIButton *)blockBtn{
     BlockViewController *blockVC = [[BlockViewController alloc] init];
-//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:blockVC];
     [self presentViewController:blockVC animated:YES completion:^{}];
     __weak typeof(self) weakSelf = self;
     [blockVC setBlock:^(NSString * _Nonnull text) {
