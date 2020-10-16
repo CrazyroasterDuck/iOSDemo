@@ -10,10 +10,11 @@
 #import "CustomButton.h"
 #define MainWidth [UIScreen mainScreen].bounds.size.width
 #define MainHeight [UIScreen mainScreen].bounds.size.height
-@interface NetViewController ()<UISearchBarDelegate,WKNavigationDelegate>
+@interface NetViewController ()<UISearchBarDelegate,WKNavigationDelegate,WKScriptMessageHandler,WKUIDelegate>
 {
     CustomButton *backButton;
     UILabel *resLabel;
+    WKUserContentController *userContent;
 }
 @property (nonatomic, strong) UISearchBar *searchBar;
 /// 网页控制导航栏
@@ -28,6 +29,9 @@
 
 @property (strong, nonatomic) NSString *baseURLString;
 
+//为视图添加进度条
+@property(nonatomic,strong) UIProgressView *progressView;
+
 @end
 
 @implementation NetViewController
@@ -40,7 +44,8 @@
     //[self NSURLSessionBinaryUploadTaskTest];
     //[self simpleExampleTest];
     [self addSubViews];
-    [self refreshBottomButtonState];
+    [self.wkWebView addSubview:self.progressView];
+    [self.wkWebView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
     [self.wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]]];
     
     UIButton *tempBtn = [[CustomButton alloc] init];
@@ -179,123 +184,71 @@
 }
 
 - (void)addSubViews {
-    [self addBottomViewButtons];
     [self.view addSubview:self.searchBar];
     [self.view addSubview:self.wkWebView];
 }
 
-- (void)addBottomViewButtons {
-    // 记录按钮个数
-    int count = 0;
-    // 添加按钮
-    _backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_backBtn setTitle:@"后退" forState:UIControlStateNormal];
-    [_backBtn setTitleColor:[UIColor colorWithRed:249 / 255.0 green:102 / 255.0 blue:129 / 255.0 alpha:1.0] forState:UIControlStateNormal];
-    [_backBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-    [_backBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
-    [_backBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
-    _backBtn.tag = ++count;    // 标记按钮
-    [_backBtn addTarget:self action:@selector(onBottomButtonsClicled:) forControlEvents:UIControlEventTouchUpInside];
-    [self.bottomView addSubview:_backBtn];
-    
-    
-    _forwardBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_forwardBtn setTitle:@"前进" forState:UIControlStateNormal];
-    [_forwardBtn setTitleColor:[UIColor colorWithRed:249 / 255.0 green:102 / 255.0 blue:129 / 255.0 alpha:1.0] forState:UIControlStateNormal];
-    [_forwardBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-    [_forwardBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
-    [_forwardBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
-    _forwardBtn.tag = ++count;
-    [_forwardBtn addTarget:self action:@selector(onBottomButtonsClicled:) forControlEvents:UIControlEventTouchUpInside];
-    [self.bottomView addSubview:_forwardBtn];
-    
-    _reloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_reloadBtn setTitle:@"重新加载" forState:UIControlStateNormal];
-    [_reloadBtn setTitleColor:[UIColor colorWithRed:249 / 255.0 green:102 / 255.0 blue:129 / 255.0 alpha:1.0] forState:UIControlStateNormal];
-    [_reloadBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-    [_reloadBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
-    [_reloadBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
-    _reloadBtn.tag = ++count;
-    [_reloadBtn addTarget:self action:@selector(onBottomButtonsClicled:) forControlEvents:UIControlEventTouchUpInside];
-    [self.bottomView addSubview:_reloadBtn];
-    
-    _browserBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_browserBtn setTitle:@"Safari" forState:UIControlStateNormal];
-    [_browserBtn setTitleColor:[UIColor colorWithRed:249 / 255.0 green:102 / 255.0 blue:129 / 255.0 alpha:1.0] forState:UIControlStateNormal];
-    [_browserBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-    [_browserBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
-    [_browserBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
-    _browserBtn.tag = ++count;
-    [_browserBtn addTarget:self action:@selector(onBottomButtonsClicled:) forControlEvents:UIControlEventTouchUpInside];
-    [self.bottomView addSubview:_browserBtn];
-    // 统一设置frame
-    [self setupBottomViewLayout];
-}
-- (void)setupBottomViewLayout
+
+
+#pragma mark - WKWebView WKUIDelegate 相关
+- (void)webView:(WKWebView *)webView
+    runJavaScriptAlertPanelWithMessage:(NSString *)message
+    initiatedByFrame:(WKFrameInfo *)frame
+    completionHandler:(void (^)(void))completionHandler
 {
-    int count = 4;
-    CGFloat btnW = 80;
-    CGFloat btnH = 30;
-    
-    CGFloat btnY = (self.bottomView.bounds.size.height - btnH) / 2;
-    // 按钮间间隙
-    CGFloat margin = (self.bottomView.bounds.size.width - btnW * count) / count;
-    
-    CGFloat btnX = margin * 0.5;
-    self.backBtn.frame = CGRectMake(btnX, btnY, btnW, btnH);
-    
-    btnX = self.backBtn.frame.origin.x + btnW + margin;
-    self.forwardBtn.frame = CGRectMake(btnX, btnY, btnW, btnH);
-    
-    btnX = self.forwardBtn.frame.origin.x + btnW + margin;
-    self.reloadBtn.frame = CGRectMake(btnX, btnY, btnW, btnH);
-    
-    btnX = self.reloadBtn.frame.origin.x + btnW + margin;
-    self.browserBtn.frame = CGRectMake(btnX, btnY, btnW, btnH);
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message
+                                                                             message:nil
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"OK"
+                                                        style:UIAlertActionStyleCancel
+                                                      handler:^(UIAlertAction *action) {
+                                                          completionHandler();
+                                                      }]];
+    [self presentViewController:alertController animated:YES completion:^{}];
 }
-/// 刷新按钮是否允许点击
-- (void)refreshBottomButtonState {
-    if ([self.wkWebView canGoBack]) {
-        self.backBtn.enabled = YES;
-    } else {
-        self.backBtn.enabled = NO;
-    }
+
+// 显示两个按钮，通过completionHandler回调判断用户点击的确定还是取消按钮
+- (void)webView:(WKWebView *)webView
+    runJavaScriptConfirmPanelWithMessage:(NSString *)message
+    initiatedByFrame:(WKFrameInfo *)frame
+    completionHandler:(void (^)(BOOL))completionHandler{
     
-    if ([self.wkWebView canGoForward]) {
-        self.forwardBtn.enabled = YES;
-    } else {
-        self.forwardBtn.enabled = NO;
-    }
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        completionHandler(YES);
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+        completionHandler(NO);
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
+    
 }
-/// 按钮点击事件
-- (void)onBottomButtonsClicled:(UIButton *)sender {
-    switch (sender.tag) {
-        case 1:
-        {
-            [self.wkWebView goBack];
-            [self refreshBottomButtonState];
-        }
-            break;
-        case 2:
-        {
-            [self.wkWebView goForward];
-            [self refreshBottomButtonState];
-        }
-            break;
-        case 3:
-            [self.wkWebView reload];
-            break;
-        case 4:
-            [[UIApplication sharedApplication] openURL:self.wkWebView.URL];
-            break;
-        default:
-            break;
-    }
+
+// 显示一个带有输入框和一个确定按钮的，通过completionHandler回调用户输入的内容
+- (void)webView:(WKWebView *)webView
+    runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt
+    defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame
+    completionHandler:(void (^)(NSString * _Nullable))completionHandler{
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        
+    }];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        completionHandler(alertController.textFields.lastObject.text);
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
+
 
 #pragma mark - WKWebView WKNavigationDelegate 相关
 /// 是否允许加载网页 在发送请求之前，决定是否跳转
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+- (void)webView:(WKWebView *)webView
+    decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction
+    decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     
     NSString *urlString = [[navigationAction.request URL] absoluteString];
     
@@ -309,6 +262,26 @@
         NSLog(@"protocolHead=%@",protocolHead);
     }
     decisionHandler(WKNavigationActionPolicyAllow);
+}
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation{
+    //native调用js方法(js中调用alert的方法需要实现WKUIDelegate中的Alertpanel相关方法否则无法弹框)
+    [_wkWebView evaluateJavaScript:@"iOSCallJsAlert()" completionHandler:^(id _Nullable item, NSError * _Nullable error) {
+        if(error != nil){
+            NSLog(@"%@",error);
+        }
+    }];
+    //加载远程JS文件
+//    [webView evaluateJavaScript:@"var script = document.createElement('script');"
+//         "script.type = 'text/javascript';"
+//         "script.src = 'https://cn.bing.com/rs/6w/5/cj,nj/liatFQ1U8ZUHMNx-XEOJJE4W_qw.js';"
+//         "document.getElementsByTagName('head')[0].appendChild(script);"
+//                       completionHandler:^(id _Nullable object, NSError * _Nullable error)
+//         {
+//
+//
+//        NSLog(@"------error = %@ object = %@",error,object);
+//         }];
 }
 
 
@@ -344,7 +317,7 @@
 #pragma mark - 懒加载
 - (UIView *)bottomView {
     if (_bottomView == nil) {
-        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, (MainHeight / 2 + 135), MainWidth, 44)];
+        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, MainHeight - 45, MainWidth, 44)];
         _bottomView.backgroundColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1];
         [self.view addSubview:_bottomView];
     }
@@ -363,12 +336,19 @@
 
 - (WKWebView *)wkWebView {
     if (_wkWebView == nil) {
-        WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 135, MainWidth, MainHeight / 2)];
+        //创建配置
+        WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+        //创建UserContentController，提供js向webview发送消息的方法
+        userContent = [[WKUserContentController alloc] init];
+        // 添加消息处理，注意：self指代的对象需要遵守WKScriptMessageHandler协议，结束时需要移除
+        [userContent addScriptMessageHandler:self name:@"JS_Function_Name"];
+        config.userContentController = userContent;
+        
+        WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 135, MainWidth, MainHeight - 180) configuration:config];
         webView.backgroundColor = [UIColor lightGrayColor];
         webView.navigationDelegate = self;
-//                webView.scrollView.scrollEnabled = NO;
+        webView.UIDelegate = self;
         
-        //        webView.backgroundColor = [UIColor colorWithPatternImage:self.image];
         // 允许左右划手势导航，默认允许
         webView.allowsBackForwardNavigationGestures = YES;
         _wkWebView = webView;
@@ -376,4 +356,53 @@
 
     return _wkWebView;
 }
+
+- (UIProgressView *)progressView{
+    if(!_progressView){
+        _progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, MainHeight / 2 , MainWidth, 1)];
+        _progressView.tintColor = [UIColor blueColor];
+        _progressView.trackTintColor = [UIColor whiteColor];
+    }
+    return _progressView;
+}
+
+#pragma mark - WKScriptMessageHandler
+- (void)userContentController:(nonnull WKUserContentController *)userContentController
+      didReceiveScriptMessage:(nonnull WKScriptMessage *)message {
+    NSString *mes;
+    mes = message.name;
+    mes = message.body;
+    NSLog(@"JS 调用 iOS name :%@ body : %@",message.name,message.body);
+}
+
+#pragma mark - KVO
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+                       context:(void *)context{
+    if([keyPath isEqualToString:@"estimatedProgress"]){
+        self.progressView.progress = self.wkWebView.estimatedProgress;
+        if (self.progressView.progress == 1) {
+            /*
+             * 添加一个简单的动画，将 progressView 的 Height 变为1.5倍
+             * 动画时长0.25s，延时0.3s后开始动画
+             * 动画结束后将 progressView 隐藏
+             */
+            __weak __typeof(self)weakSelf = self;
+            [UIView animateWithDuration:0.25f delay:0.3f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                weakSelf.progressView.transform = CGAffineTransformMakeScale(1.0f, 1.5f);
+            } completion:^(BOOL finished) {
+                weakSelf.progressView.hidden = YES;
+            }];
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+- (void)dealloc{
+    [userContent removeScriptMessageHandlerForName:@"JS_Function_Name"];
+    [self.wkWebView removeObserver:self forKeyPath:@"estimatedProgress"];
+}
+
 @end

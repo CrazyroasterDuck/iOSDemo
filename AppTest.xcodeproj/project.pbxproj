@@ -29,6 +29,10 @@
 		9DCC5C67253196440090C713 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC5C66253196440090C713 /* Person.m */; };
 		9DCC5C6A2531A4540090C713 /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC5C692531A4540090C713 /* CustomButton.m */; };
 		9DCC5C702531ABBF0090C713 /* NetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC5C6F2531ABBF0090C713 /* NetViewController.m */; };
+		9DCC5C732537DE6D0090C713 /* AnimationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC5C722537DE6C0090C713 /* AnimationViewController.m */; };
+		9DCC5C7D253833D70090C713 /* instance.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DCC5C7C253833D70090C713 /* instance.png */; };
+		9DCC5C7F25383A930090C713 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DCC5C7E25383A930090C713 /* smile.png */; };
+		9DCC5C8225385DCC0090C713 /* BezierView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC5C8125385DCB0090C713 /* BezierView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +73,12 @@
 		9DCC5C692531A4540090C713 /* CustomButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomButton.m; sourceTree = "<group>"; };
 		9DCC5C6E2531ABBF0090C713 /* NetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetViewController.h; sourceTree = "<group>"; };
 		9DCC5C6F2531ABBF0090C713 /* NetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetViewController.m; sourceTree = "<group>"; };
+		9DCC5C712537DE6C0090C713 /* AnimationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnimationViewController.h; sourceTree = "<group>"; };
+		9DCC5C722537DE6C0090C713 /* AnimationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnimationViewController.m; sourceTree = "<group>"; };
+		9DCC5C7C253833D70090C713 /* instance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = instance.png; sourceTree = "<group>"; };
+		9DCC5C7E25383A930090C713 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
+		9DCC5C8025385DCB0090C713 /* BezierView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BezierView.h; sourceTree = "<group>"; };
+		9DCC5C8125385DCB0090C713 /* BezierView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BezierView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +112,6 @@
 			isa = PBXGroup;
 			children = (
 				9DCBE69E2520B281009EF8F9 /* Data Structure */,
-				9DCBE699252079B2009EF8F9 /* New Group */,
 				9D96C6182520356D00199391 /* View */,
 				9D96C6172520354800199391 /* Controller */,
 				9D95676325188EA70071A7B6 /* AppDelegate.h */,
@@ -117,6 +126,7 @@
 				9D95676F25188EA70071A7B6 /* AppTest.xcdatamodeld */,
 				9DCC5C1A253053700090C713 /* GCDTest.h */,
 				9DCC5C1B253053700090C713 /* GCDTest.m */,
+				9DCBE699252079B2009EF8F9 /* New Group */,
 			);
 			path = AppTest;
 			sourceTree = "<group>";
@@ -132,6 +142,8 @@
 				9DCC5C13253001A30090C713 /* BlockViewController.m */,
 				9DCC5C6E2531ABBF0090C713 /* NetViewController.h */,
 				9DCC5C6F2531ABBF0090C713 /* NetViewController.m */,
+				9DCC5C712537DE6C0090C713 /* AnimationViewController.h */,
+				9DCC5C722537DE6C0090C713 /* AnimationViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -147,6 +159,8 @@
 				9DCBE6A62521B768009EF8F9 /* EditPersonView.m */,
 				9DCC5C682531A4540090C713 /* CustomButton.h */,
 				9DCC5C692531A4540090C713 /* CustomButton.m */,
+				9DCC5C8025385DCB0090C713 /* BezierView.h */,
+				9DCC5C8125385DCB0090C713 /* BezierView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -154,6 +168,8 @@
 		9DCBE699252079B2009EF8F9 /* New Group */ = {
 			isa = PBXGroup;
 			children = (
+				9DCC5C7E25383A930090C713 /* smile.png */,
+				9DCC5C7C253833D70090C713 /* instance.png */,
 				9DCBE69A25208AAB009EF8F9 /* SecondImage@2x.png */,
 				9DCBE69B25208AAB009EF8F9 /* SecondImage@3x.png */,
 				9DCBE693252077F0009EF8F9 /* FirstImage@3x.png */,
@@ -231,9 +247,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D95677625188EAA0071A7B6 /* LaunchScreen.storyboard in Resources */,
+				9DCC5C7F25383A930090C713 /* smile.png in Resources */,
 				9D95677325188EAA0071A7B6 /* Assets.xcassets in Resources */,
 				9DCBE69C25208AAB009EF8F9 /* SecondImage@2x.png in Resources */,
 				9D95676E25188EA70071A7B6 /* Main.storyboard in Resources */,
+				9DCC5C7D253833D70090C713 /* instance.png in Resources */,
 				9DCBE698252077F0009EF8F9 /* FirstImage@2x.png in Resources */,
 				9DCBE697252077F0009EF8F9 /* FirstImage@3x.png in Resources */,
 				9DCBE69D25208AAB009EF8F9 /* SecondImage@3x.png in Resources */,
@@ -250,12 +268,14 @@
 				9D95677925188EAA0071A7B6 /* main.m in Sources */,
 				9D95676B25188EA70071A7B6 /* FirstViewController.m in Sources */,
 				9D95677125188EA70071A7B6 /* AppTest.xcdatamodeld in Sources */,
+				9DCC5C732537DE6D0090C713 /* AnimationViewController.m in Sources */,
 				9DCBE66D25205ADF009EF8F9 /* SecondViewController.m in Sources */,
 				9D95676525188EA70071A7B6 /* AppDelegate.m in Sources */,
 				9DCBE6A72521B768009EF8F9 /* EditPersonView.m in Sources */,
 				9DCC5C1C253053700090C713 /* GCDTest.m in Sources */,
 				9D95676825188EA70071A7B6 /* SceneDelegate.m in Sources */,
 				9DCC5C702531ABBF0090C713 /* NetViewController.m in Sources */,
+				9DCC5C8225385DCC0090C713 /* BezierView.m in Sources */,
 				9DCC5C14253001A30090C713 /* BlockViewController.m in Sources */,
 				9DCC5C67253196440090C713 /* Person.m in Sources */,
 				9DCC5C6A2531A4540090C713 /* CustomButton.m in Sources */,

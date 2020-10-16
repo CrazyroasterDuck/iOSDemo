@@ -11,12 +11,14 @@
 #import "BlockViewController.h"
 #import "CustomButton.h"
 #import "NetViewController.h"
+#import "AnimationViewController.h"
 
 @interface FirstViewController ()<ViewDelegate,UITextFieldDelegate>
 {
     UIButton *btn;
     UIButton *blockBtn;
     UIButton *netBtn;
+    UIButton *animationBtn;
     UILabel *label;
     UILabel *blockLbl;
     DelegateView *dView;
@@ -51,6 +53,12 @@
     [netBtn setTitle:@"进入网络模块" forState:UIControlStateNormal];
     [netBtn addTarget:self action:@selector(netBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:netBtn];
+    
+    animationBtn = [[CustomButton alloc] init];
+    [animationBtn setFrame:CGRectMake(320, 250, 75, 75)];
+    [animationBtn setTitle:@"动画" forState:UIControlStateNormal];
+    [animationBtn addTarget:self action:@selector(animationBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:animationBtn];
     
     //设置导航栏的标题属性
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 62, 20)];
@@ -205,7 +213,12 @@
         __typeof__(self) strongSelf = weakSelf;
         strongSelf->blockLbl.text = text;
     }];
-    
+}
+
+- (void)animationBtnClicked:(UIButton *)btn{
+    AnimationViewController *animationVC = [[AnimationViewController alloc] init];
+    [self presentViewController:animationVC animated:YES completion:^{
+    }];
 }
 
 #pragma mark -ViewDelegate
