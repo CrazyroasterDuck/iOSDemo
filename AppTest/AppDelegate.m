@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
+#import "FirstViewController.h"
+#import "SecondViewController.h"
 
 @interface AppDelegate ()
 
@@ -15,32 +16,64 @@
 
 @implementation AppDelegate
 
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary<UIApplicationLaunchOptionsKey,id> *)launchOptions{
+    NSLog(@"app即将完成初始化！");
+    return YES;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.viewControler = [[ViewController alloc] init];
-    self.window.rootViewController = self.viewControler;
+    self.window.backgroundColor = [UIColor whiteColor];
+    
+    self.tabBarController = [[UITabBarController alloc] init];
+    self.tabBarController.view.backgroundColor = [UIColor blueColor];
+    
+    FirstViewController *viewController1 = [[FirstViewController alloc] init];
+    UINavigationController *nav1 = [[UINavigationController alloc]initWithRootViewController:viewController1];
+    nav1.view.backgroundColor = [UIColor whiteColor];
+    nav1.tabBarItem.title = @"首页";
+    nav1.tabBarItem.image = [[UIImage imageNamed:@"FirstImage"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    nav1.tabBarItem.selectedImage = [[UIImage imageNamed:@"FirstImage"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    
+    SecondViewController *viewController2 = [[SecondViewController alloc] init];
+    UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:viewController2];
+    nav2.navigationItem.title = @"次页";
+    nav2.view.backgroundColor = [UIColor whiteColor];
+    nav2.tabBarItem.title = @"次页";
+    nav2.tabBarItem.image = [[UIImage imageNamed:@"SecondImage"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    nav2.tabBarItem.selectedImage = [[UIImage imageNamed:@"SecondImage"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    self.tabBarController = [[UITabBarController alloc] init];
+    self.tabBarController.viewControllers = @[nav1,nav2];
+    self.tabBarController.tabBar.translucent = NO;
+    self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;
 }
 
-
-#pragma mark - UISceneSession lifecycle
-
-
-- (UISceneConfiguration *)application:(UIApplication *)application configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession options:(UISceneConnectionOptions *)options {
-    // Called when a new scene session is being created.
-    // Use this method to select a configuration to create the new scene with.
-    return [[UISceneConfiguration alloc] initWithName:@"Default Configuration" sessionRole:connectingSceneSession.role];
+//处理UI生命周期
+- (void)applicationWillResignActive:(UIApplication *)application {
+    NSLog(@"程序将要失去焦点");
 }
 
-
-- (void)application:(UIApplication *)application didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions {
-    // Called when the user discards a scene session.
-    // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-    // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    NSLog(@"程序已经进入后台");
 }
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    NSLog(@"程序将要进入前台");
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    NSLog(@"程序获得焦点");
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    NSLog(@"程序将要终止");
+}
+
 
 
 #pragma mark - Core Data stack

@@ -17,7 +17,9 @@
 
 @property (strong,nonatomic) UIWindow *window;
 
-@property (strong,nonatomic) ViewController *viewControler;
+@property (strong,nonatomic) UITabBarController *tabBarController;
+
+//@property (strong,nonatomic) ViewController *viewControler;
 
 - (void)saveContext;
 
