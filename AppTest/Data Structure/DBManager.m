@@ -7,15 +7,19 @@
 //
 
 #import "DBManager.h"
+#import "Person.h"
 
 static DBManager *sharedInstance = nil;
+static dispatch_once_t onceToken = 0;
 static sqlite3 *database = nil;
 static sqlite3_stmt *statement = nil;
 
 @implementation DBManager
 + (DBManager *)getSharedInstance{
     if(!sharedInstance){
-        sharedInstance = [[super allocWithZone:NULL]init];
+        dispatch_once(&onceToken, ^{
+         sharedInstance = [[self alloc] init];
+         });
         [sharedInstance createDB];
     }
     return sharedInstance;

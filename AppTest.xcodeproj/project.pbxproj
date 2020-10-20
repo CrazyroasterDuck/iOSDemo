@@ -33,9 +33,17 @@
 		9DCC5C7D253833D70090C713 /* instance.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DCC5C7C253833D70090C713 /* instance.png */; };
 		9DCC5C7F25383A930090C713 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DCC5C7E25383A930090C713 /* smile.png */; };
 		9DCC5C8225385DCC0090C713 /* BezierView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC5C8125385DCB0090C713 /* BezierView.m */; };
+		9DCC5C882539974A0090C713 /* Person+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC5C872539974A0090C713 /* Person+Category.m */; };
+		9DCC5C8B253D330D0090C713 /* Student.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC5C8A253D330D0090C713 /* Student.m */; };
+		9DCC5C94253D87E80090C713 /* UIViewController+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC5C93253D87E80090C713 /* UIViewController+Swizzling.m */; };
+		9DCC5CAE253EB7800090C713 /* launch image.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DCC5CAD253EB7800090C713 /* launch image.png */; };
+		E73F72E281837385BEE63B1F /* libPods-AppTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F565BF6CBF64E5D96A88E30 /* libPods-AppTest.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F565BF6CBF64E5D96A88E30 /* libPods-AppTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AppTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		477C18BDA2E24153600F2778 /* Pods-AppTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppTest.release.xcconfig"; path = "Target Support Files/Pods-AppTest/Pods-AppTest.release.xcconfig"; sourceTree = "<group>"; };
+		993D9BBDFE7D8A35C91F4529 /* Pods-AppTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppTest.debug.xcconfig"; path = "Target Support Files/Pods-AppTest/Pods-AppTest.debug.xcconfig"; sourceTree = "<group>"; };
 		9D95676025188EA70071A7B6 /* AppTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D95676325188EA70071A7B6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9D95676425188EA70071A7B6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -79,6 +87,13 @@
 		9DCC5C7E25383A930090C713 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
 		9DCC5C8025385DCB0090C713 /* BezierView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BezierView.h; sourceTree = "<group>"; };
 		9DCC5C8125385DCB0090C713 /* BezierView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BezierView.m; sourceTree = "<group>"; };
+		9DCC5C862539974A0090C713 /* Person+Category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Person+Category.h"; sourceTree = "<group>"; };
+		9DCC5C872539974A0090C713 /* Person+Category.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Person+Category.m"; sourceTree = "<group>"; };
+		9DCC5C89253D330D0090C713 /* Student.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Student.h; sourceTree = "<group>"; };
+		9DCC5C8A253D330D0090C713 /* Student.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Student.m; sourceTree = "<group>"; };
+		9DCC5C92253D87E80090C713 /* UIViewController+Swizzling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Swizzling.h"; sourceTree = "<group>"; };
+		9DCC5C93253D87E80090C713 /* UIViewController+Swizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Swizzling.m"; sourceTree = "<group>"; };
+		9DCC5CAD253EB7800090C713 /* launch image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "launch image.png"; path = "../../../../Desktop/launch image.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,17 +101,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E73F72E281837385BEE63B1F /* libPods-AppTest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		85C2177BD800793C16362337 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2F565BF6CBF64E5D96A88E30 /* libPods-AppTest.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9D95675725188EA70071A7B6 = {
 			isa = PBXGroup;
 			children = (
 				9D95676225188EA70071A7B6 /* AppTest */,
 				9D95676125188EA70071A7B6 /* Products */,
+				9EC781E051937C8B0CF5B765 /* Pods */,
+				85C2177BD800793C16362337 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -144,6 +170,8 @@
 				9DCC5C6F2531ABBF0090C713 /* NetViewController.m */,
 				9DCC5C712537DE6C0090C713 /* AnimationViewController.h */,
 				9DCC5C722537DE6C0090C713 /* AnimationViewController.m */,
+				9DCC5C92253D87E80090C713 /* UIViewController+Swizzling.h */,
+				9DCC5C93253D87E80090C713 /* UIViewController+Swizzling.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -168,6 +196,7 @@
 		9DCBE699252079B2009EF8F9 /* New Group */ = {
 			isa = PBXGroup;
 			children = (
+				9DCC5CAD253EB7800090C713 /* launch image.png */,
 				9DCC5C7E25383A930090C713 /* smile.png */,
 				9DCC5C7C253833D70090C713 /* instance.png */,
 				9DCBE69A25208AAB009EF8F9 /* SecondImage@2x.png */,
@@ -185,8 +214,21 @@
 				9DCBE6A02520B2A9009EF8F9 /* DBManager.m */,
 				9DCC5C65253196440090C713 /* Person.h */,
 				9DCC5C66253196440090C713 /* Person.m */,
+				9DCC5C862539974A0090C713 /* Person+Category.h */,
+				9DCC5C872539974A0090C713 /* Person+Category.m */,
+				9DCC5C89253D330D0090C713 /* Student.h */,
+				9DCC5C8A253D330D0090C713 /* Student.m */,
 			);
 			path = "Data Structure";
+			sourceTree = "<group>";
+		};
+		9EC781E051937C8B0CF5B765 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				993D9BBDFE7D8A35C91F4529 /* Pods-AppTest.debug.xcconfig */,
+				477C18BDA2E24153600F2778 /* Pods-AppTest.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,6 +238,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9D95677C25188EAA0071A7B6 /* Build configuration list for PBXNativeTarget "AppTest" */;
 			buildPhases = (
+				F7B088244447D197F2395790 /* [CP] Check Pods Manifest.lock */,
 				9D95675C25188EA70071A7B6 /* Sources */,
 				9D95675D25188EA70071A7B6 /* Frameworks */,
 				9D95675E25188EA70071A7B6 /* Resources */,
@@ -247,6 +290,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D95677625188EAA0071A7B6 /* LaunchScreen.storyboard in Resources */,
+				9DCC5CAE253EB7800090C713 /* launch image.png in Resources */,
 				9DCC5C7F25383A930090C713 /* smile.png in Resources */,
 				9D95677325188EAA0071A7B6 /* Assets.xcassets in Resources */,
 				9DCBE69C25208AAB009EF8F9 /* SecondImage@2x.png in Resources */,
@@ -260,6 +304,31 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		F7B088244447D197F2395790 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AppTest-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9D95675C25188EA70071A7B6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -271,13 +340,16 @@
 				9DCC5C732537DE6D0090C713 /* AnimationViewController.m in Sources */,
 				9DCBE66D25205ADF009EF8F9 /* SecondViewController.m in Sources */,
 				9D95676525188EA70071A7B6 /* AppDelegate.m in Sources */,
+				9DCC5C882539974A0090C713 /* Person+Category.m in Sources */,
 				9DCBE6A72521B768009EF8F9 /* EditPersonView.m in Sources */,
+				9DCC5C94253D87E80090C713 /* UIViewController+Swizzling.m in Sources */,
 				9DCC5C1C253053700090C713 /* GCDTest.m in Sources */,
 				9D95676825188EA70071A7B6 /* SceneDelegate.m in Sources */,
 				9DCC5C702531ABBF0090C713 /* NetViewController.m in Sources */,
 				9DCC5C8225385DCC0090C713 /* BezierView.m in Sources */,
 				9DCC5C14253001A30090C713 /* BlockViewController.m in Sources */,
 				9DCC5C67253196440090C713 /* Person.m in Sources */,
+				9DCC5C8B253D330D0090C713 /* Student.m in Sources */,
 				9DCC5C6A2531A4540090C713 /* CustomButton.m in Sources */,
 				9D9567832518A59B0071A7B6 /* DelegateView.m in Sources */,
 				9DCBE6A12520B2A9009EF8F9 /* DBManager.m in Sources */,
@@ -419,6 +491,7 @@
 		};
 		9D95677D25188EAA0071A7B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 993D9BBDFE7D8A35C91F4529 /* Pods-AppTest.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -436,6 +509,7 @@
 		};
 		9D95677E25188EAA0071A7B6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 477C18BDA2E24153600F2778 /* Pods-AppTest.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

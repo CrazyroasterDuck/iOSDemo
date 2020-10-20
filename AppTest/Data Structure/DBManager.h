@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
-#import "Person.h"
 NS_ASSUME_NONNULL_BEGIN
 
+@class Person;
 @interface DBManager : NSObject
 {
     NSString *databasePath;

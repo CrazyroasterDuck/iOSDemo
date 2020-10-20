@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong) NSString *name;
 @property(nonatomic,strong) NSString *department;
 @property(nonatomic,strong) NSString *year;
+- (void)printInfo;
+- (void)sw_printInfo;
 @end
 
 NS_ASSUME_NONNULL_END
