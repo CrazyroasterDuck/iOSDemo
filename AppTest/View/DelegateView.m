@@ -7,7 +7,7 @@
 //
 
 #import "DelegateView.h"
-
+#import <Masonry/Masonry.h>
 @interface DelegateView()
 {
     UILabel *label;
@@ -20,16 +20,23 @@
 - (instancetype)init
 {
     if(self = [super init]){
-        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 100)];
-        label.text = @"show after click view!";
-        label.textColor = [UIColor blueColor];
-        label.hidden = YES;
-        [self addSubview:label];
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
-        [self addGestureRecognizer:tap];
         self.backgroundColor = [UIColor whiteColor];
     }
     return self;
+}
+
+- (void)initLbl{
+    label = [[UILabel alloc] init];
+    label.text = @"show after click view!";
+    label.textColor = [UIColor blueColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.hidden = YES;
+    [self addSubview:label];
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self);
+    }];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+    [self addGestureRecognizer:tap];
 }
 
 - (void)tapAction:(UITapGestureRecognizer *)gestureRecognizer {

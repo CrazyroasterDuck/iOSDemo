@@ -5,6 +5,75 @@
 	<key>logFormatVersion</key>
 	<integer>10</integer>
 	<key>logs</key>
-	<dict/>
+	<dict>
+		<key>87FCDD6E-1676-4CB2-9A61-67BED9378769</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>87FCDD6E-1676-4CB2-9A61-67BED9378769.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>AppTest project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>AppTest</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build AppTest</string>
+			<key>timeStartedRecording</key>
+			<real>624959001.99230301</real>
+			<key>timeStoppedRecording</key>
+			<real>624959002.55198896</real>
+			<key>title</key>
+			<string>Build AppTest</string>
+			<key>uniqueIdentifier</key>
+			<string>87FCDD6E-1676-4CB2-9A61-67BED9378769</string>
+		</dict>
+		<key>91B8A453-ABDD-4695-9B89-87C16F3E0BED</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>91B8A453-ABDD-4695-9B89-87C16F3E0BED.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>AppTest project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>AppTest</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build AppTest</string>
+			<key>timeStartedRecording</key>
+			<real>624959168.44423103</real>
+			<key>timeStoppedRecording</key>
+			<real>624959182.68461204</real>
+			<key>title</key>
+			<string>Build AppTest</string>
+			<key>uniqueIdentifier</key>
+			<string>91B8A453-ABDD-4695-9B89-87C16F3E0BED</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

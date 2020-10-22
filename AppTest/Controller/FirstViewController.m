@@ -6,12 +6,17 @@
 //  Copyright © 2020 疯狂的盐水吖. All rights reserved.
 //
 
+#import <Masonry/Masonry.h>
+#import <AVFoundation/AVFoundation.h>
+#import <AVKit/AVKit.h>
 #import "FirstViewController.h"
 #import "DelegateView.h"
 #import "BlockViewController.h"
 #import "CustomButton.h"
 #import "NetViewController.h"
 #import "AnimationViewController.h"
+#import "ContainerView.h"
+#import "Utility.h"
 
 @interface FirstViewController ()<ViewDelegate,UITextFieldDelegate>
 {
@@ -20,9 +25,13 @@
     UIButton *netBtn;
     UIButton *animationBtn;
     UILabel *label;
-    UILabel *blockLbl;
     DelegateView *dView;
+    UIScrollView *scrollView;
+    ContainerView *cView;
     BOOL isShow;
+    AVPlayerItem *vItem;
+    AVPlayer *vPlayer;
+    AVPlayerViewController *playerVC;
 }
 @end
 
@@ -38,27 +47,27 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = UIColor.brownColor;
-    [self initBlockView];
+    isShow = YES;
+    [self initDelegateView];
+    [self initNetBtn];
+    [self addTextFieldWithDifferentKeyboard];
     [self setBtnStyle];
     [self setLabelStyle];
-    [self addTextFieldWithDifferentKeyboard];
-    dView = [[DelegateView alloc] init];
-    dView.delegate = self;
-    [dView setFrame:CGRectMake(20, 120, 200, 100)];
-    [self.view addSubview:dView];
-    isShow = YES;
-    
-    netBtn = [[CustomButton alloc] init];
-    [netBtn setFrame:CGRectMake(250, 120, 150, 75)];
-    [netBtn setTitle:@"进入网络模块" forState:UIControlStateNormal];
-    [netBtn addTarget:self action:@selector(netBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:netBtn];
+    [self initBlockView];
+    [self initScrollView];
+    [self initVideoPlayerView];
     
     animationBtn = [[CustomButton alloc] init];
-    [animationBtn setFrame:CGRectMake(320, 250, 75, 75)];
+    //[animationBtn setFrame:CGRectMake(320, 250, 75, 75)];
     [animationBtn setTitle:@"动画" forState:UIControlStateNormal];
     [animationBtn addTarget:self action:@selector(animationBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:animationBtn];
+    [animationBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(dView);
+        make.top.mas_equalTo(blockBtn).offset(10);
+        make.size.mas_equalTo(CGSizeMake(75, 75));
+    }];
+    
     
     //设置导航栏的标题属性
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 62, 20)];
@@ -109,33 +118,100 @@
     NSLog(@"%s",__func__);
 }
 
-- (void)initBlockView{
-    blockBtn = [[CustomButton alloc] init];
-    [blockBtn setFrame:CGRectMake(10, self.view.bounds.size.height - 400, 120, 75)];
-    [blockBtn setTitle:@"block button" forState:UIControlStateNormal];
-    [blockBtn addTarget:self action:@selector(blockBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:blockBtn];
+- (void)initDelegateView{
+    dView = [[DelegateView alloc] init];
+    dView.delegate = self;
+    [self.view addSubview:dView];
+    [dView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(20);
+        make.top.equalTo(@120);
+        make.size.mas_equalTo(CGSizeMake(200,50));
+    }];
+    [dView initLbl];
+}
+
+- (void)initNetBtn{
+    netBtn = [[CustomButton alloc] init];
+    //[netBtn setFrame:CGRectMake(250, 120, 150, 75)];
+    [netBtn setTitle:@"进入网络模块" forState:UIControlStateNormal];
+    [netBtn addTarget:self action:@selector(netBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:netBtn];
+    [netBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view).offset(-20);
+        make.top.equalTo(dView);
+        make.size.mas_equalTo(CGSizeMake(150, 75));
+    }];
+}
+
+
+- (void) addTextFieldWithDifferentKeyboard{
     
-    blockLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, self.view.bounds.size.height - 290, 200, 150)];
-    blockLbl.textAlignment = NSTextAlignmentCenter;
-    blockLbl.textColor = [UIColor blackColor];
-    blockLbl.backgroundColor = [UIColor lightGrayColor];
-    [self.view addSubview:blockLbl];
+    UITextField *lastField , *textField;
+    for(int i = 0;i < 6;i++){
+        textField= [[UITextField alloc]init];
+        textField.delegate = self;
+        textField.borderStyle = UITextBorderStyleRoundedRect;
+        [self.view addSubview:textField];
+        switch (i) {
+            case 0:
+                textField.placeholder = @"Default keyboard";
+                break;
+            case 1:
+                textField.keyboardType = UIKeyboardTypeASCIICapable;
+                textField.placeholder = @"ASCII keyboard";
+                break;
+            case 2:
+                textField.keyboardType = UIKeyboardTypePhonePad;
+                textField.placeholder = @"Phone pad keyboard";
+                break;
+            case 3:
+                textField.keyboardType = UIKeyboardTypeDecimalPad;
+                textField.placeholder = @"Decimal pad keyboard";
+                break;
+            case 4:
+                textField.keyboardType = UIKeyboardTypeEmailAddress;
+                textField.placeholder = @"Email keyboard";
+                break;
+            case 5:
+                textField.keyboardType = UIKeyboardTypeURL;
+                textField.placeholder = @"URL keyboard";
+                break;
+            default:
+                break;
+        }
+        if(lastField){
+            [textField mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(lastField.mas_left);
+                make.top.mas_equalTo(lastField.mas_bottom).offset(5);
+                make.size.equalTo(lastField);
+            }];
+        } else {
+            [textField mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(dView.mas_left);
+                make.top.mas_equalTo(dView.mas_bottom).offset(20);
+                make.size.equalTo(@(CGSizeMake(200, 30)));
+            }];
+        }
+        lastField = textField;
+    }
 }
 
 - (void)setBtnStyle{
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(([UIScreen mainScreen].bounds.size.width - 120) / 2, ([UIScreen mainScreen].bounds.size.height - 90) / 2 + 100, 120, 90)];
     [btn setTitle:@"click me!" forState:UIControlStateNormal];
     [btn setBackgroundColor:[UIColor greenColor]];
-    
     //MV的target-action通信方式
     [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
+    [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(netBtn.mas_left);
+        make.top.mas_equalTo(netBtn.mas_bottom).offset(20);
+        make.size.mas_equalTo(CGSizeMake(150, 75));
+    }];
 }
 
 - (void)setLabelStyle{
-    label = [[UILabel alloc] initWithFrame:CGRectMake(([UIScreen mainScreen].bounds.size.width - 200) / 2, ([UIScreen mainScreen].bounds.size.height + 100) / 2 + 100, 200, 100)];
+    label = [[UILabel alloc] init];
     label.numberOfLines = 0; //不限制label标签的行数
     label.textColor = [UIColor blackColor];
     label.backgroundColor = [UIColor whiteColor];
@@ -143,57 +219,111 @@
     label.textAlignment = NSTextAlignmentCenter;
     label.hidden = YES;
     [self.view addSubview:label];
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(btn.mas_left);
+        make.top.mas_equalTo(btn.mas_bottom).offset(5);
+        make.right.mas_equalTo(btn.mas_right);
+        make.height.mas_equalTo(75);
+    }];
 }
 
--(void) addTextFieldWithDifferentKeyboard{
-
-   UITextField *textField1= [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 250, 280, 30)];
-   textField1.delegate = self;
-   textField1.borderStyle = UITextBorderStyleRoundedRect;
-   textField1.placeholder = @"Default Keyboard";
-   [self.view addSubview:textField1];
-
-   UITextField *textField2 = [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 280, 280, 30)];
-   textField2.delegate = self;
-   textField2.borderStyle = UITextBorderStyleRoundedRect;
-   textField2.keyboardType = UIKeyboardTypeASCIICapable;
-   textField2.placeholder = @"ASCII keyboard";
-   [self.view addSubview:textField2];
-
-   UITextField *textField3 = [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 310, 280, 30)];
-   textField3.delegate = self;
-   textField3.borderStyle = UITextBorderStyleRoundedRect;
-   textField3.keyboardType = UIKeyboardTypePhonePad;
-   textField3.placeholder = @"Phone pad keyboard";
-   [self.view addSubview:textField3];
-
-   UITextField *textField4 = [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 340, 280, 30)];
-   textField4.delegate = self;
-   textField4.borderStyle = UITextBorderStyleRoundedRect;
-   textField4.keyboardType = UIKeyboardTypeDecimalPad;
-   textField4.placeholder = @"Decimal pad keyboard";
-   [self.view addSubview:textField4];
-
-   UITextField *textField5= [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 370, 280, 30)];
-   textField5.delegate = self;
-   textField5.borderStyle = UITextBorderStyleRoundedRect;
-   textField5.keyboardType = UIKeyboardTypeEmailAddress;
-   textField5.placeholder = @"Email keyboard";
-   [self.view addSubview:textField5];
-
-   UITextField *textField6= [[UITextField alloc]initWithFrame:
-   CGRectMake(20, 400, 280, 30)];
-   textField6.delegate = self;
-   textField6.borderStyle = UITextBorderStyleRoundedRect;
-   textField6.keyboardType = UIKeyboardTypeURL;
-   textField6.placeholder = @"URL keyboard";
-   [self.view addSubview:textField6];
+- (void)initBlockView{
+    blockBtn = [[CustomButton alloc] init];
+    [blockBtn setTitle:@"block button" forState:UIControlStateNormal];
+    [blockBtn addTarget:self action:@selector(blockBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:blockBtn];
+    [blockBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(btn.mas_left);
+        make.top.mas_equalTo(label.mas_bottom).offset(20);
+        make.size.mas_equalTo(netBtn);
+    }];
 }
+
+- (void)initScrollView{
+    scrollView = [[UIScrollView alloc] init];
+    scrollView.backgroundColor = [UIColor whiteColor];
+    scrollView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:scrollView];
+    [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(blockBtn.mas_bottom).offset(20);
+        make.left.right.bottom.mas_equalTo(self.view);
+    }];
+    cView = [[ContainerView alloc]init];
+    cView.backgroundColor = [UIColor blackColor];
+    [scrollView addSubview:cView];
+    [cView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(scrollView);
+        make.width.mas_equalTo(scrollView);
+    }];
+    [cView initImagView];
+    [cView initPlayerView];
+}
+
+- (void)initVideoPlayerView{
+    NSString *vStr = @""; //@"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
+    NSURL *vUrl = [NSURL URLWithString:[Utility EncodeString:vStr]];
+    vItem = [AVPlayerItem playerItemWithURL:vUrl];
+    vPlayer = [AVPlayer playerWithPlayerItem:vItem];
+    //使用layer设置视图约束不太方便该用AVPlayerViewController
+//    playLayer = [AVPlayerLayer playerLayerWithPlayer:vPlayer];
+//    playLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+//    playLayer.backgroundColor = [UIColor greenColor].CGColor;
+//    [scrollView.layer addSublayer:playLayer];
+//    playLayer.frame = CGRectMake(0, 0, 200, 400);
+    playerVC = [[AVPlayerViewController alloc]init];
+    playerVC.player = vPlayer;
+    playerVC.view.backgroundColor = [UIColor whiteColor];
+    [cView.playerView addSubview:playerVC.view];
+    [playerVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.right.mas_equalTo(0);
+        make.height.mas_equalTo(300);
+    }];
+
+    [vItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
+    [vItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+    
+    __block __typeof(self) weakself = self;
+    [vPlayer addPeriodicTimeObserverForInterval:CMTimeMake(1, 1)
+                                          queue:dispatch_get_main_queue()
+                                     usingBlock:^(CMTime time) {
+        NSTimeInterval current = CMTimeGetSeconds(time); //当前播放时间
+        NSTimeInterval total = CMTimeGetSeconds(weakself->vPlayer.currentItem.duration);
+        NSLog(@"now %f,total %f",current,total);
+    }];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                      change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+                       context:(void *)context
+{
+    AVPlayerItem *playerItem = (AVPlayerItem *)object;
+    if([keyPath isEqualToString:@"loadedTimeRanges"]){
+        
+    } else if([keyPath isEqualToString:@"status"]){
+        if(playerItem.status == AVPlayerItemStatusReadyToPlay){
+            NSLog(@"player Item is ready to play");
+            [vPlayer play];
+        } else if(playerItem.status == AVPlayerStatusUnknown){
+            NSLog(@"playerItem unknown错误");
+        } else if(playerItem.status == AVPlayerStatusFailed){
+            NSLog(@"playerItem 失败");
+        }
+    }
+    //销毁监听
+    [vItem removeObserver:self forKeyPath:@"status"];
+    [vItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
+}
+
+- (NSTimeInterval)availableDurationWithplayerItem:(AVPlayerItem *)playerItem{
+    NSArray *loadedTimeRanges = [playerItem loadedTimeRanges];
+    CMTimeRange timeRange = [loadedTimeRanges.firstObject CMTimeRangeValue];
+    NSTimeInterval startSec = CMTimeGetSeconds(timeRange.start);
+    NSTimeInterval durationSec = CMTimeGetSeconds(timeRange.duration);
+    return startSec + durationSec;
+}
+
+# pragma mark -Action
 
 - (void)btnClicked:(UIButton *)btn{
     label.hidden = !label.hidden;
@@ -211,7 +341,7 @@
     [blockVC setBlock:^(NSString * _Nonnull text) {
         //通过以下方式换成强引用,或者将上面的__weak换成__block
         __typeof__(self) strongSelf = weakSelf;
-        strongSelf->blockLbl.text = text;
+        strongSelf->label.text = text;
     }];
 }
 

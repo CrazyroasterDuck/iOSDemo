@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init;
 - (void)showLabel:(BOOL)show;
+- (void)initLbl;
 @end
 
 NS_ASSUME_NONNULL_END
