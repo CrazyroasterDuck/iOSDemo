@@ -107,7 +107,7 @@ static NSString *notifiationName = @"nt";
     [tableView reloadData];
 }
 - (void)delPersonInfo:(NSArray *)arr{
-    [[DBManager getSharedInstance]deleteInfo:arr];
+    [[DBManager getSharedInstance] deleteInfo:arr];
     [self initData];
     [tableView reloadData];
 }

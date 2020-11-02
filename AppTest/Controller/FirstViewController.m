@@ -116,6 +116,8 @@
 
 -(void)dealloc{
     NSLog(@"%s",__func__);
+    [vItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
+    [vItem removeObserver:self forKeyPath:@"status"];
 }
 
 - (void)initDelegateView{
